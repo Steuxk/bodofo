@@ -1,5 +1,8 @@
+import { useEffect, useRef } from "react";
+import { playSquatCue } from "../audio/audioFeedback";
 import { SQUAT_TARGET } from "../config";
 import { useSquatCountdown } from "../hooks/useSquatCountdown";
+import { SquatSlime } from "./SquatSlime";
 
 interface SquatBreakProps {
   onComplete: () => void;
@@ -12,6 +15,17 @@ export function SquatBreak({
 }: SquatBreakProps) {
   const { count, status, isComplete, pause, resume, restart } =
     useSquatCountdown({ onComplete });
+  const previousCountRef = useRef(0);
+
+  useEffect(() => {
+    if (count <= previousCountRef.current) {
+      previousCountRef.current = count;
+      return;
+    }
+
+    playSquatCue();
+    previousCountRef.current = count;
+  }, [count]);
 
   return (
     <section
@@ -26,32 +40,22 @@ export function SquatBreak({
       <h1 id="mode-title">
         {isComplete ? "Done! Nicely moved." : "Ten squats together."}
       </h1>
+      <SquatSlime
+        bounceKey={count}
+        isPaused={status === "paused"}
+      />
       <div className="squat-counter" aria-live="polite">
-        <strong>{count}</strong>
-        <span>/ {SQUAT_TARGET} squats</span>
-      </div>
-      <div
-        className="squat-progress"
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={SQUAT_TARGET}
-        aria-valuenow={count}
-        aria-label="Squat break progress"
-      >
-        <span
-          style={{
-            width: `${Math.min(100, (count / SQUAT_TARGET) * 100)}%`,
-          }}
-        >
-          <i aria-hidden="true" />
-        </span>
+        <strong>Squat {count}</strong>
+        <span>of {SQUAT_TARGET}</span>
       </div>
       <p className="squat-instruction">
         {isComplete
           ? "Heading back to focus..."
           : status === "paused"
             ? "Paused. Take your time."
-            : "Follow the bouncing dot. Down, then gently up."}
+            : count === 0
+              ? "Get ready. Follow the slime's gentle bounce."
+              : "One soft bounce, one steady squat."}
       </p>
       <div className="timer-actions">
         {!isComplete && status === "running" && (

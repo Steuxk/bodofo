@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   SQUAT_DONE_DELAY_MS,
   SQUAT_INTERVAL_MS,
@@ -15,17 +15,31 @@ export function useSquatCountdown({
 }: UseSquatCountdownOptions) {
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState<TimerStatus>("running");
+  const elapsedBeforeRunRef = useRef(0);
+  const runStartedAtRef = useRef(Date.now());
   const isComplete = count >= SQUAT_TARGET;
 
   useEffect(() => {
     if (status !== "running" || isComplete) return;
 
-    const timeout = window.setTimeout(() => {
-      setCount((current) => Math.min(SQUAT_TARGET, current + 1));
-    }, SQUAT_INTERVAL_MS);
+    const updateCount = () => {
+      const elapsed =
+        elapsedBeforeRunRef.current + Date.now() - runStartedAtRef.current;
+      setCount(
+        Math.min(SQUAT_TARGET, Math.floor(elapsed / SQUAT_INTERVAL_MS)),
+      );
+    };
 
-    return () => window.clearTimeout(timeout);
-  }, [count, isComplete, status]);
+    updateCount();
+    const interval = window.setInterval(updateCount, 100);
+    const handleVisibility = () => updateCount();
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [isComplete, status]);
 
   useEffect(() => {
     if (!isComplete) return;
@@ -34,9 +48,17 @@ export function useSquatCountdown({
     return () => window.clearTimeout(timeout);
   }, [isComplete, onComplete]);
 
-  const pause = useCallback(() => setStatus("paused"), []);
-  const resume = useCallback(() => setStatus("running"), []);
+  const pause = useCallback(() => {
+    elapsedBeforeRunRef.current += Date.now() - runStartedAtRef.current;
+    setStatus("paused");
+  }, []);
+  const resume = useCallback(() => {
+    runStartedAtRef.current = Date.now();
+    setStatus("running");
+  }, []);
   const restart = useCallback(() => {
+    elapsedBeforeRunRef.current = 0;
+    runStartedAtRef.current = Date.now();
     setCount(0);
     setStatus("running");
   }, []);
