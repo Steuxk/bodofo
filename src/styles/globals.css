@@ -117,7 +117,7 @@ input:disabled {
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.11em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .tagline {
@@ -193,7 +193,7 @@ input:disabled {
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.09em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .mode-pill__dot {
@@ -210,7 +210,7 @@ input:disabled {
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .timer-card h1 {
@@ -241,7 +241,7 @@ input:disabled {
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .task-field input {
@@ -273,7 +273,7 @@ input:disabled {
   font-weight: 800;
   letter-spacing: 0.1em;
   text-align: center;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .duration-picker > div {
@@ -384,7 +384,7 @@ input:disabled {
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .break-card {
@@ -715,7 +715,7 @@ input:disabled {
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .buddy-options {
