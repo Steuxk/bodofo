@@ -918,7 +918,7 @@ input:disabled {
 }
 
 .breathing-orb--exhale span {
-  animation: breathe-out 6s ease-in-out both;
+  animation: breathe-out 8s ease-in-out both;
 }
 
 .breathing-instruction strong,
@@ -931,10 +931,35 @@ input:disabled {
   text-transform: capitalize;
 }
 
+.breathing-instruction b {
+  margin: 9px 0 2px;
+  color: var(--navy);
+  font-size: 3rem;
+  font-variant-numeric: tabular-nums;
+}
+
 .breathing-instruction span {
   margin-top: 7px;
   color: rgba(23, 50, 77, 0.58);
   font-size: 0.85rem;
+}
+
+.breathing-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 24px auto 0;
+}
+
+.breathing-progress span {
+  width: 42px;
+  height: 7px;
+  border-radius: 999px;
+  background: #d1ccdc;
+}
+
+.breathing-progress span.is-complete {
+  background: #69628f;
 }
 
 .break-time {

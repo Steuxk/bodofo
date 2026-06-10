@@ -4,6 +4,7 @@ import {
   unlockAudio,
 } from "./audio/audioFeedback";
 import { BreathingGuide } from "./components/BreathingGuide";
+import { BreathingComplete } from "./components/BreathingComplete";
 import { BreathingPreparation } from "./components/BreathingPreparation";
 import { CompanionModal } from "./components/CompanionModal";
 import { FloatingCompanion } from "./components/FloatingCompanion";
@@ -180,9 +181,15 @@ function App() {
 
         {currentStage === "breathing" && (
           <BreathingGuide
-            remainingSeconds={0}
-            totalSeconds={0}
+            onComplete={() => {
+              playCompletionCue();
+              setCurrentStage("breathingComplete");
+            }}
           />
+        )}
+
+        {currentStage === "breathingComplete" && (
+          <BreathingComplete onFocus={startAnotherFocus} />
         )}
 
         {currentStage === "squat" && (

@@ -1,42 +1,33 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { playBreathingCue } from "../audio/audioFeedback";
-import { formatTime } from "../utils/time";
-
-type BreathingPhase = "inhale" | "hold" | "exhale";
+import { useBreathingExercise } from "../hooks/useBreathingExercise";
 
 interface BreathingGuideProps {
-  remainingSeconds: number;
-  totalSeconds: number;
+  onComplete: () => void;
 }
 
-const phaseCopy: Record<BreathingPhase, string> = {
+const phaseCopy = {
   inhale: "Breathe in softly",
   hold: "Stay here",
   exhale: "Let it all go",
-};
+} as const;
 
-function getBreathingPhase(
-  remainingSeconds: number,
-  totalSeconds: number,
-): BreathingPhase {
-  const elapsedInCycle = (totalSeconds - remainingSeconds) % 14;
-  if (elapsedInCycle < 4) return "inhale";
-  if (elapsedInCycle < 8) return "hold";
-  return "exhale";
-}
-
-export function BreathingGuide({
-  remainingSeconds,
-  totalSeconds,
-}: BreathingGuideProps) {
-  const phase = getBreathingPhase(remainingSeconds, totalSeconds);
-  const previousPhase = useRef<BreathingPhase | null>(null);
+export function BreathingGuide({ onComplete }: BreathingGuideProps) {
+  const stableOnComplete = useCallback(onComplete, [onComplete]);
+  const {
+    phase,
+    phaseSecondsRemaining,
+    currentSet,
+    remainingSets,
+    totalSets,
+  } = useBreathingExercise({ onComplete: stableOnComplete });
+  const previousPhase = useRef<string | null>(null);
 
   useEffect(() => {
-    if (remainingSeconds <= 0 || previousPhase.current === phase) return;
+    if (previousPhase.current === phase) return;
     previousPhase.current = phase;
     playBreathingCue(phase);
-  }, [phase, remainingSeconds]);
+  }, [phase]);
 
   return (
     <section
@@ -45,25 +36,33 @@ export function BreathingGuide({
     >
       <div className="mode-pill">
         <span className="mode-pill__dot" />
-        Breathing break
+        Breathing exercise
       </div>
-      <p className="session-label">4 in · 4 hold · 6 out</p>
+      <p className="session-label">
+        Set {currentSet} of {totalSets}
+      </p>
       <h1 id="mode-title">Breathe with your buddy.</h1>
       <div className={`breathing-orb breathing-orb--${phase}`} aria-hidden="true">
         <span />
       </div>
       <p className="breathing-instruction" aria-live="polite">
         <strong>{phase}</strong>
+        <b>{phaseSecondsRemaining}</b>
         <span>{phaseCopy[phase]}</span>
       </p>
-      <time
-        className="break-time"
-        dateTime={`PT${remainingSeconds}S`}
-        aria-label={`${remainingSeconds} seconds left`}
-      >
-        {formatTime(remainingSeconds)}
-      </time>
-      <p className="gentle-copy">Nothing to solve for a moment.</p>
+      <div className="breathing-progress" aria-label="Breathing set progress">
+        {Array.from({ length: totalSets }, (_, index) => (
+          <span
+            className={index < currentSet ? "is-complete" : ""}
+            key={index}
+          />
+        ))}
+      </div>
+      <p className="gentle-copy">
+        {remainingSets === 0
+          ? "Final set"
+          : `${remainingSets} ${remainingSets === 1 ? "set" : "sets"} remaining`}
+      </p>
     </section>
   );
 }
