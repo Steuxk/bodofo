@@ -2,6 +2,8 @@ export type Mode = "focus" | "breathing" | "squat";
 
 export type TimerStatus = "idle" | "running" | "paused";
 
+export type FocusDurationMinutes = 15 | 25 | 30;
+
 export type BuddyType = "study" | "cat" | "office" | "gym";
 
 export interface BuddySettings {

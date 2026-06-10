@@ -261,6 +261,67 @@ input:disabled {
   color: rgba(23, 50, 77, 0.42);
 }
 
+.duration-picker {
+  margin: 0 auto 18px;
+  padding: 0;
+  border: 0;
+}
+
+.duration-picker legend {
+  width: 100%;
+  margin-bottom: 8px;
+  color: rgba(23, 50, 77, 0.58);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.duration-picker > div {
+  display: inline-flex;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 18px;
+  background: rgba(23, 50, 77, 0.06);
+}
+
+.duration-option {
+  display: flex;
+  gap: 3px;
+  align-items: baseline;
+  min-height: 42px;
+  padding: 0 13px;
+  border: 2px solid transparent;
+  border-radius: 13px;
+  color: rgba(23, 50, 77, 0.58);
+  cursor: pointer;
+}
+
+.duration-option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.duration-option span {
+  font-weight: 800;
+}
+
+.duration-option small {
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.duration-option--selected {
+  color: var(--navy);
+  background: var(--white);
+  box-shadow: 0 3px 10px rgba(23, 50, 77, 0.08);
+}
+
+.duration-option:focus-within {
+  border-color: var(--coral);
+}
+
 .primary-button {
   min-height: 54px;
   padding: 0 28px;

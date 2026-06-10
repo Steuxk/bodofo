@@ -5,10 +5,19 @@ import { FloatingCompanion } from "./components/FloatingCompanion";
 import { SquatBreak } from "./components/SquatBreak";
 import { ThoughtDump } from "./components/ThoughtDump";
 import { TimerCard } from "./components/TimerCard";
-import { SESSION_DURATIONS } from "./config";
+import {
+  DEFAULT_FOCUS_DURATION,
+  getFocusDurationSeconds,
+  SESSION_DURATIONS,
+} from "./config";
 import { useCountdown } from "./hooks/useCountdown";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import type { BuddySettings, Mode, Thought } from "./types/bodofo";
+import type {
+  BuddySettings,
+  FocusDurationMinutes,
+  Mode,
+  Thought,
+} from "./types/bodofo";
 
 function App() {
   const [currentMode, setCurrentMode] = useState<Mode>("focus");
@@ -20,6 +29,11 @@ function App() {
     "bodofo:focus-session-count",
     0,
   );
+  const [focusDuration, setFocusDuration] =
+    useLocalStorage<FocusDurationMinutes>(
+      "bodofo:focus-duration",
+      DEFAULT_FOCUS_DURATION,
+    );
   const [squatCount, setSquatCount] = useState(0);
   const [thoughts, setThoughts] = useLocalStorage<Thought[]>(
     "bodofo:thoughts",
@@ -34,8 +48,9 @@ function App() {
   const handleTimerComplete = useCallback(() => {
     if (currentMode === "focus") {
       const completedSessions = focusSessionCount + 1;
+      const isSquatSession = completedSessions % 2 === 0;
       setFocusSessionCount(completedSessions);
-      setCurrentMode(completedSessions % 2 === 0 ? "squat" : "breathing");
+      setCurrentMode(isSquatSession ? "squat" : "breathing");
       return;
     }
 
@@ -45,12 +60,23 @@ function App() {
   }, [currentMode, focusSessionCount, setFocusSessionCount]);
 
   const countdown = useCountdown({
-    initialSeconds: SESSION_DURATIONS[currentMode],
+    initialSeconds:
+      currentMode === "focus"
+        ? getFocusDurationSeconds(focusDuration)
+        : currentMode === "breathing"
+          ? SESSION_DURATIONS.breathing
+          : 0,
     onComplete: handleTimerComplete,
   });
 
   useEffect(() => {
-    countdown.reset(SESSION_DURATIONS[currentMode]);
+    const modeDuration =
+      currentMode === "focus"
+        ? getFocusDurationSeconds(focusDuration)
+        : currentMode === "breathing"
+          ? SESSION_DURATIONS.breathing
+          : 0;
+    countdown.reset(modeDuration);
     if (currentMode === "breathing") {
       countdown.start();
     }
@@ -62,6 +88,10 @@ function App() {
   }, [currentMode]);
 
   const returnToFocus = () => setCurrentMode("focus");
+  const changeFocusDuration = (duration: FocusDurationMinutes) => {
+    setFocusDuration(duration);
+    countdown.reset(getFocusDurationSeconds(duration));
+  };
   const addThought = (text: string) => {
     setThoughts((current) => [
       ...current,
@@ -110,10 +140,12 @@ function App() {
         {currentMode === "focus" && (
           <TimerCard
             currentTask={currentTask}
+            focusDuration={focusDuration}
             focusSessionCount={focusSessionCount}
             remainingSeconds={countdown.remainingSeconds}
             status={countdown.status}
             onTaskChange={setCurrentTask}
+            onDurationChange={changeFocusDuration}
             onStart={countdown.start}
             onPause={countdown.pause}
             onResume={countdown.resume}

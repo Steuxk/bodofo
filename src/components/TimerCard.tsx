@@ -1,12 +1,18 @@
-import type { TimerStatus } from "../types/bodofo";
+import { FOCUS_DURATION_OPTIONS } from "../config";
+import type {
+  FocusDurationMinutes,
+  TimerStatus,
+} from "../types/bodofo";
 import { formatTime } from "../utils/time";
 
 interface TimerCardProps {
   currentTask: string;
+  focusDuration: FocusDurationMinutes;
   focusSessionCount: number;
   remainingSeconds: number;
   status: TimerStatus;
   onTaskChange: (task: string) => void;
+  onDurationChange: (duration: FocusDurationMinutes) => void;
   onStart: () => void;
   onPause: () => void;
   onResume: () => void;
@@ -15,10 +21,12 @@ interface TimerCardProps {
 
 export function TimerCard({
   currentTask,
+  focusDuration,
   focusSessionCount,
   remainingSeconds,
   status,
   onTaskChange,
+  onDurationChange,
   onStart,
   onPause,
   onResume,
@@ -57,6 +65,33 @@ export function TimerCard({
           maxLength={100}
         />
       </label>
+      {status !== "running" && (
+        <fieldset className="duration-picker">
+          <legend>Focus length</legend>
+          <div>
+            {FOCUS_DURATION_OPTIONS.map((duration) => (
+              <label
+                className={
+                  focusDuration === duration
+                    ? "duration-option duration-option--selected"
+                    : "duration-option"
+                }
+                key={duration}
+              >
+                <input
+                  type="radio"
+                  name="focus-duration"
+                  value={duration}
+                  checked={focusDuration === duration}
+                  onChange={() => onDurationChange(duration)}
+                />
+                <span>{duration}</span>
+                <small>min</small>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
       <div className="timer-actions">
         {status === "idle" && (
           <button className="primary-button" type="button" onClick={onStart}>
