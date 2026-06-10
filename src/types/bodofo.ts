@@ -9,9 +9,14 @@ export interface BuddySettings {
   type: BuddyType;
 }
 
+export interface Point {
+  x: number;
+  y: number;
+}
+
 export interface Thought {
   id: string;
   text: string;
   createdAt: number;
+  position?: Point;
 }
-

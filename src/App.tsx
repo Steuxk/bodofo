@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { BreathingGuide } from "./components/BreathingGuide";
+import { CompanionModal } from "./components/CompanionModal";
+import { FloatingCompanion } from "./components/FloatingCompanion";
 import { SquatBreak } from "./components/SquatBreak";
+import { ThoughtDump } from "./components/ThoughtDump";
 import { TimerCard } from "./components/TimerCard";
 import { SESSION_DURATIONS } from "./config";
 import { useCountdown } from "./hooks/useCountdown";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import type { Mode } from "./types/bodofo";
+import type { BuddySettings, Mode, Thought } from "./types/bodofo";
 
 function App() {
   const [currentMode, setCurrentMode] = useState<Mode>("focus");
@@ -18,6 +21,15 @@ function App() {
     0,
   );
   const [squatCount, setSquatCount] = useState(0);
+  const [thoughts, setThoughts] = useLocalStorage<Thought[]>(
+    "bodofo:thoughts",
+    [],
+  );
+  const [buddySettings, setBuddySettings] = useLocalStorage<BuddySettings>(
+    "bodofo:buddy-settings",
+    { name: "Milo", type: "study" },
+  );
+  const [isBuddyModalOpen, setIsBuddyModalOpen] = useState(false);
 
   const handleTimerComplete = useCallback(() => {
     if (currentMode === "focus") {
@@ -50,6 +62,16 @@ function App() {
   }, [currentMode]);
 
   const returnToFocus = () => setCurrentMode("focus");
+  const addThought = (text: string) => {
+    setThoughts((current) => [
+      ...current,
+      {
+        id: crypto.randomUUID(),
+        text,
+        createdAt: Date.now(),
+      },
+    ]);
+  };
 
   return (
     <main className={`app app--${currentMode}`}>
@@ -73,11 +95,17 @@ function App() {
       </header>
 
       <section className="focus-village" id="focus-room">
-        <aside className="placeholder-card placeholder-card--notes">
-          <span className="eyebrow">Thought dock</span>
-          <h2>Park it for later.</h2>
-          <p>Your thoughts will have a cozy place to wait here.</p>
-        </aside>
+        <ThoughtDump
+          mode={currentMode}
+          thoughts={thoughts}
+          onAdd={addThought}
+          onRemove={(id) =>
+            setThoughts((current) =>
+              current.filter((thought) => thought.id !== id),
+            )
+          }
+          onClear={() => setThoughts([])}
+        />
 
         {currentMode === "focus" && (
           <TimerCard
@@ -111,15 +139,22 @@ function App() {
           />
         )}
 
-        <aside className="placeholder-card placeholder-card--buddy">
-          <span className="eyebrow">Body double</span>
-          <div className="buddy-placeholder" aria-hidden="true">
-            <span>•ᴗ•</span>
-          </div>
-          <h2>A buddy is on the way.</h2>
-          <p>Someone quiet to work beside you.</p>
-        </aside>
       </section>
+
+      <FloatingCompanion
+        mode={currentMode}
+        settings={buddySettings}
+        onCustomize={() => setIsBuddyModalOpen(true)}
+      />
+      <CompanionModal
+        isOpen={isBuddyModalOpen}
+        settings={buddySettings}
+        onClose={() => setIsBuddyModalOpen(false)}
+        onSave={(settings) => {
+          setBuddySettings(settings);
+          setIsBuddyModalOpen(false);
+        }}
+      />
 
       <footer className="village-footer" aria-hidden="true">
         <div className="hill hill--back" />
