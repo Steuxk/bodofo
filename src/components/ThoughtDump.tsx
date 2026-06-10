@@ -33,7 +33,12 @@ export function ThoughtDump({
           <span className="eyebrow">Thought dock</span>
           <h2>Park it for later.</h2>
         </div>
-        <span className="thought-count" aria-label={`${thoughts.length} thoughts`}>
+        <span
+          className="thought-count"
+          aria-label={`${thoughts.length} ${
+            thoughts.length === 1 ? "thought" : "thoughts"
+          }`}
+        >
           {thoughts.length}
         </span>
       </header>
@@ -88,4 +93,3 @@ export function ThoughtDump({
     </aside>
   );
 }
-

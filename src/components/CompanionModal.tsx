@@ -58,9 +58,10 @@ export function CompanionModal({
         <h2 id="buddy-modal-title">Choose your buddy</h2>
         <p>Pick someone who feels easy to work beside.</p>
 
-        <label className="modal-field">
+        <label className="modal-field" htmlFor="buddy-name">
           <span>Buddy name</span>
           <input
+            id="buddy-name"
             ref={nameInputRef}
             value={name}
             onChange={(event) => setName(event.target.value)}
@@ -113,4 +114,3 @@ export function CompanionModal({
     </div>
   );
 }
-
