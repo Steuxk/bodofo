@@ -19,7 +19,7 @@ motion. Avoid warm beach, village, candy, or playground styling.
 - TypeScript
 - Vite
 - CSS in `src/styles/globals.css`
-- Geist Mono with Noto Sans and system monospace fallbacks
+- Quicksand with Noto Sans and system sans-serif fallbacks
 - Browser `localStorage`
 - Web Audio API
 - jsPDF, loaded dynamically for thought-dump exports
