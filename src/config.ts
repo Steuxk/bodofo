@@ -7,7 +7,7 @@ export const SESSION_DURATIONS = {
   breathing: readDuration(import.meta.env.VITE_BREATHING_DURATION, 2 * 60),
 } as const;
 
-export const FOCUS_DURATION_OPTIONS = [15, 25, 30] as const;
+export const FOCUS_DURATION_OPTIONS = [0.1, 15, 25, 30] as const;
 export const DEFAULT_FOCUS_DURATION = 25;
 export const TEST_FOCUS_DURATION = readDuration(
   import.meta.env.VITE_FOCUS_DURATION,
