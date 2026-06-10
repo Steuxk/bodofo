@@ -11,7 +11,7 @@ export const BUDDIES: BuddyDefinition[] = [
   {
     type: "study",
     label: "Study Buddy",
-    accent: "#f3c75b",
+    accent: "#8ce6ff",
     activity: {
       focus: "Studying quietly",
       breathing: "Breathing slowly",
@@ -21,7 +21,7 @@ export const BUDDIES: BuddyDefinition[] = [
   {
     type: "cat",
     label: "Cat Buddy",
-    accent: "#ed9a5f",
+    accent: "#4db6d6",
     activity: {
       focus: "Keeping you company",
       breathing: "Having a soft stretch",
@@ -31,7 +31,7 @@ export const BUDDIES: BuddyDefinition[] = [
   {
     type: "office",
     label: "Calm Buddy",
-    accent: "#79b8c8",
+    accent: "#72cfe3",
     activity: {
       focus: "Working beside you",
       breathing: "Taking a screen break",
@@ -41,7 +41,7 @@ export const BUDDIES: BuddyDefinition[] = [
   {
     type: "gym",
     label: "Gym Buddy",
-    accent: "#aaa2d7",
+    accent: "#668ab0",
     activity: {
       focus: "Holding steady",
       breathing: "Recovering calmly",
