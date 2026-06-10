@@ -34,7 +34,6 @@ function App() {
       "bodofo:focus-duration",
       DEFAULT_FOCUS_DURATION,
     );
-  const [squatCount, setSquatCount] = useState(0);
   const [thoughts, setThoughts] = useLocalStorage<Thought[]>(
     "bodofo:thoughts",
     [],
@@ -79,9 +78,6 @@ function App() {
     countdown.reset(modeDuration);
     if (currentMode === "breathing") {
       countdown.start();
-    }
-    if (currentMode === "squat") {
-      setSquatCount(0);
     }
     // The stable mode boundary intentionally owns each fresh countdown.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,11 +158,7 @@ function App() {
 
         {currentMode === "squat" && (
           <SquatBreak
-            squatCount={squatCount}
-            onIncrement={() =>
-              setSquatCount((count) => Math.min(10, count + 1))
-            }
-            onDone={returnToFocus}
+            onComplete={returnToFocus}
             onSkip={returnToFocus}
           />
         )}

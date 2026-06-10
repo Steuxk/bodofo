@@ -1,19 +1,17 @@
 import { SQUAT_TARGET } from "../config";
+import { useSquatCountdown } from "../hooks/useSquatCountdown";
 
 interface SquatBreakProps {
-  squatCount: number;
-  onIncrement: () => void;
-  onDone: () => void;
+  onComplete: () => void;
   onSkip: () => void;
 }
 
 export function SquatBreak({
-  squatCount,
-  onIncrement,
-  onDone,
+  onComplete,
   onSkip,
 }: SquatBreakProps) {
-  const isComplete = squatCount >= SQUAT_TARGET;
+  const { count, status, isComplete, pause, resume, restart } =
+    useSquatCountdown({ onComplete });
 
   return (
     <section
@@ -26,33 +24,51 @@ export function SquatBreak({
       </div>
       <p className="session-label">A little reset</p>
       <h1 id="mode-title">
-        {isComplete ? "Nicely done." : "Move a little, then come back."}
+        {isComplete ? "Done! Nicely moved." : "Ten squats together."}
       </h1>
       <div className="squat-counter" aria-live="polite">
-        <strong>{squatCount}</strong>
+        <strong>{count}</strong>
         <span>/ {SQUAT_TARGET} squats</span>
       </div>
-      <div className="squat-progress" aria-hidden="true">
+      <div
+        className="squat-progress"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={SQUAT_TARGET}
+        aria-valuenow={count}
+        aria-label="Squat break progress"
+      >
         <span
           style={{
-            width: `${Math.min(100, (squatCount / SQUAT_TARGET) * 100)}%`,
+            width: `${Math.min(100, (count / SQUAT_TARGET) * 100)}%`,
           }}
-        />
-      </div>
-      {!isComplete && (
-        <button className="primary-button squat-button" onClick={onIncrement}>
-          I did one
-        </button>
-      )}
-      <div className="timer-actions">
-        <button
-          className={isComplete ? "primary-button" : "text-button"}
-          type="button"
-          onClick={onDone}
-          disabled={!isComplete}
         >
-          Done
-        </button>
+          <i aria-hidden="true" />
+        </span>
+      </div>
+      <p className="squat-instruction">
+        {isComplete
+          ? "Heading back to focus..."
+          : status === "paused"
+            ? "Paused. Take your time."
+            : "Follow the bouncing dot. Down, then gently up."}
+      </p>
+      <div className="timer-actions">
+        {!isComplete && status === "running" && (
+          <button className="primary-button" type="button" onClick={pause}>
+            Pause
+          </button>
+        )}
+        {!isComplete && status === "paused" && (
+          <button className="primary-button" type="button" onClick={resume}>
+            Resume
+          </button>
+        )}
+        {!isComplete && (
+          <button className="text-button" type="button" onClick={restart}>
+            Restart
+          </button>
+        )}
         <button className="text-button" type="button" onClick={onSkip}>
           Skip for now
         </button>
@@ -60,4 +76,3 @@ export function SquatBreak({
     </section>
   );
 }
-
