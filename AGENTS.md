@@ -9,12 +9,17 @@ and a persistent thought dock.
 Keep the product lightweight and calming. Do not add accounts, a backend,
 cloud sync, AI chat, calendars, or project-management features.
 
+The current art direction is a quiet deep-sea focus sanctuary: dark ocean
+gradients, frosted glass surfaces, bioluminescent aqua accents, and restrained
+motion. Avoid warm beach, village, candy, or playground styling.
+
 ## Stack
 
 - React 18
 - TypeScript
 - Vite
 - CSS in `src/styles/globals.css`
+- Geist Mono with Noto Sans and system monospace fallbacks
 - Browser `localStorage`
 - Web Audio API
 - jsPDF, loaded dynamically for thought-dump exports
@@ -71,7 +76,7 @@ second and the default squat interval is 2 seconds.
   - Automatic movement-break UI with slime guidance and a deliberate
     completion state.
 - `src/components/SquatSlime.tsx`
-  - Reusable SVG movement companion that animates once per squat.
+  - Reusable translucent SVG movement companion that animates once per squat.
 - `src/components/ConfettiBurst.tsx`
   - Lightweight, deterministic CSS confetti for squat completion.
 - `src/components/ThoughtDump.tsx`
@@ -120,6 +125,9 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - Buddy definitions and mode copy live in `src/data/buddies.ts`.
 - Thought objects already have an optional `position` field for future
   draggable sticky notes.
+- Keep shared colors, gradients, surfaces, and glow values in the root CSS
+  tokens instead of scattering new palettes through components.
+- Keep all rendered UI text at 14px or larger.
 - Keep buddy visuals catalog-driven so animated sprites or GIF renderers can be
   introduced without changing persisted buddy settings.
 - Keep manual edits scoped and make small milestone commits.
@@ -138,6 +146,8 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - `15a7686` automates squat breaks.
 - `8f463e3` adds stable squat timing, slime guidance, and per-squat boops.
 - `ab39c11` adds the manual squat celebration state and confetti.
+- `93bf0ad` introduces the deep-sea typography, palette, and glass surfaces.
+- `638ee6e` adds the translucent slime material and fluid motion.
 - `d8b05f9` adds persisted focus length selection.
 
 ## Verification Notes
@@ -152,7 +162,8 @@ Before handing work back:
 6. Check squat pause/resume/restart/skip, per-count animation, and manual
    completion return.
 7. Check the 390px responsive layout for horizontal overflow.
-8. Check the browser console for warnings and errors.
+8. Check computed text sizes for the 14px minimum.
+9. Check the browser console for warnings and errors.
 
 The in-app browser may throttle hidden tabs and does not fully support
 clipboard/download observation. Use visible-state feedback plus build checks,

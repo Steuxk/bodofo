@@ -8,6 +8,9 @@ chooses a four-set 4-7-8 breathing exercise, a ten-squat break, or another
 focus session. The thought dock can copy its contents as text or export them
 as a PDF.
 
+The visual system uses Geist Mono, deep navy glass surfaces, restrained
+bioluminescent accents, and a translucent jelly-like squat companion.
+
 ## Run locally
 
 ```bash
@@ -47,3 +50,5 @@ advance every 2 seconds.
   small mode state machine in `src/App.tsx`.
 - Squat timing is wall-clock based, while the slime, synthesized cues, and
   completion confetti remain separate presentation components.
+- Theme tokens and atmospheric background layers live in
+  `src/styles/globals.css`; keep future palettes centralized there.
