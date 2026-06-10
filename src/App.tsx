@@ -86,7 +86,9 @@ function App() {
   const returnToFocus = () => setCurrentMode("focus");
   const changeFocusDuration = (duration: FocusDurationMinutes) => {
     setFocusDuration(duration);
-    countdown.reset(getFocusDurationSeconds(duration));
+    if (countdown.status === "idle") {
+      countdown.reset(getFocusDurationSeconds(duration));
+    }
   };
   const addThought = (text: string) => {
     setThoughts((current) => [
