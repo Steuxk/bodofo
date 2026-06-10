@@ -27,7 +27,7 @@ export function SquatSlime({
           bounceKey > 0 ? "squat-slime__body--bounce" : ""
         }`}
         key={bounceKey}
-        viewBox="0 0 160 130"
+        viewBox="0 0 160 140"
         focusable="false"
       >
         <defs>
@@ -56,27 +56,27 @@ export function SquatSlime({
           </filter>
         </defs>
         <path
-          d="M27 102c0-15 9-24 17-34 9-12 8-29 20-38 10-8 23-9 34-4 17 7 18 27 27 41 7 11 12 20 9 35-4 18-20 25-54 25-35 0-53-8-53-25Z"
+          d="M80 16c31 0 55 25 55 58 0 35-19 55-55 55S25 109 25 74c0-33 24-58 55-58Z"
           fill="#4db6d6"
           opacity="0.3"
           filter="url(#slime-glow)"
         />
         <path
-          d="M27 102c0-15 9-24 17-34 9-12 8-29 20-38 10-8 23-9 34-4 17 7 18 27 27 41 7 11 12 20 9 35-4 18-20 25-54 25-35 0-53-8-53-25Z"
+          d="M80 16c31 0 55 25 55 58 0 35-19 55-55 55S25 109 25 74c0-33 24-58 55-58Z"
           fill="url(#slime-fill)"
           stroke="url(#slime-edge)"
           strokeWidth="2"
         />
         <path
-          d="M37 98c8 12 22 17 43 17 25 0 39-6 47-19-2 20-18 29-47 29-30 0-45-9-43-27Z"
+          d="M31 91c8 23 24 34 49 34 26 0 42-11 49-34-3 27-19 38-49 38-29 0-46-12-49-38Z"
           fill="#061826"
-          opacity="0.12"
+          opacity="0.1"
         />
-        <ellipse cx="80" cy="71" rx="47" ry="43" fill="url(#slime-inner-glow)" />
-        <ellipse cx="63" cy="78" rx="3.5" ry="4.5" fill="#0f2740" opacity="0.82" />
-        <ellipse cx="98" cy="78" rx="3.5" ry="4.5" fill="#0f2740" opacity="0.82" />
+        <ellipse cx="80" cy="69" rx="49" ry="49" fill="url(#slime-inner-glow)" />
+        <ellipse cx="62" cy="76" rx="3.5" ry="4.5" fill="#0f2740" opacity="0.82" />
+        <ellipse cx="98" cy="76" rx="3.5" ry="4.5" fill="#0f2740" opacity="0.82" />
         <path
-          d="M68 93c8 7 17 7 25 0"
+          d="M68 91c8 7 17 7 25 0"
           fill="none"
           stroke="#0f2740"
           strokeLinecap="round"
@@ -84,18 +84,18 @@ export function SquatSlime({
           opacity="0.82"
         />
         <path
-          d="M49 55c7-13 18-20 31-20"
+          d="M47 51c8-14 20-21 35-21"
           fill="none"
           stroke="#ffffff"
           strokeLinecap="round"
           strokeWidth="7"
           opacity="0.42"
         />
-        <circle cx="109" cy="54" r="5" fill="#dff8ff" opacity="0.28" />
-        <circle cx="116" cy="64" r="2.5" fill="#dff8ff" opacity="0.4" />
+        <circle cx="111" cy="49" r="5" fill="#dff8ff" opacity="0.28" />
+        <circle cx="119" cy="59" r="2.5" fill="#dff8ff" opacity="0.4" />
         <ellipse
-          cx="55"
-          cy="67"
+          cx="52"
+          cy="65"
           rx="11"
           ry="5"
           fill="#ffffff"
