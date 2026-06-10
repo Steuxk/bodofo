@@ -1,22 +1,24 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   playCompletionCue,
   unlockAudio,
 } from "./audio/audioFeedback";
 import { BreathingGuide } from "./components/BreathingGuide";
+import { BreathingPreparation } from "./components/BreathingPreparation";
 import { CompanionModal } from "./components/CompanionModal";
 import { FloatingCompanion } from "./components/FloatingCompanion";
+import { FocusComplete } from "./components/FocusComplete";
 import { SquatBreak } from "./components/SquatBreak";
 import { ThoughtDump } from "./components/ThoughtDump";
 import { TimerCard } from "./components/TimerCard";
 import {
   DEFAULT_FOCUS_DURATION,
   getFocusDurationSeconds,
-  SESSION_DURATIONS,
 } from "./config";
 import { useCountdown } from "./hooks/useCountdown";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import type {
+  AppStage,
   BuddySettings,
   FocusDurationMinutes,
   Mode,
@@ -24,7 +26,8 @@ import type {
 } from "./types/bodofo";
 
 function App() {
-  const [currentMode, setCurrentMode] = useState<Mode>("focus");
+  const [currentStage, setCurrentStage] = useState<AppStage>("focus");
+  const autoStartFocusRef = useRef(false);
   const [currentTask, setCurrentTask] = useLocalStorage(
     "bodofo:current-task",
     "",
@@ -47,47 +50,34 @@ function App() {
     { name: "Milo", type: "study" },
   );
   const [isBuddyModalOpen, setIsBuddyModalOpen] = useState(false);
+  const currentMode: Mode =
+    currentStage === "squat"
+      ? "squat"
+      : currentStage.startsWith("breathing")
+        ? "breathing"
+        : "focus";
 
   const handleTimerComplete = useCallback(() => {
-    if (currentMode === "focus") {
-      playCompletionCue();
-      const completedSessions = focusSessionCount + 1;
-      const isSquatSession = completedSessions % 2 === 0;
-      setFocusSessionCount(completedSessions);
-      setCurrentMode(isSquatSession ? "squat" : "breathing");
-      return;
-    }
-
-    if (currentMode === "breathing") {
-      playCompletionCue();
-      setCurrentMode("focus");
-    }
-  }, [currentMode, focusSessionCount, setFocusSessionCount]);
+    playCompletionCue();
+    setFocusSessionCount(focusSessionCount + 1);
+    setCurrentStage("focusComplete");
+  }, [focusSessionCount, setFocusSessionCount]);
 
   const countdown = useCountdown({
-    initialSeconds:
-      currentMode === "focus"
-        ? getFocusDurationSeconds(focusDuration)
-        : currentMode === "breathing"
-          ? SESSION_DURATIONS.breathing
-          : 0,
+    initialSeconds: getFocusDurationSeconds(focusDuration),
     onComplete: handleTimerComplete,
   });
 
   useEffect(() => {
-    const modeDuration =
-      currentMode === "focus"
-        ? getFocusDurationSeconds(focusDuration)
-        : currentMode === "breathing"
-          ? SESSION_DURATIONS.breathing
-          : 0;
-    countdown.reset(modeDuration);
-    if (currentMode === "breathing") {
+    if (currentStage !== "focus") return;
+    countdown.reset(getFocusDurationSeconds(focusDuration));
+    if (autoStartFocusRef.current) {
+      autoStartFocusRef.current = false;
       countdown.start();
     }
-    // The stable mode boundary intentionally owns each fresh countdown.
+    // The focus boundary intentionally owns each fresh countdown.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentMode]);
+  }, [currentStage]);
 
   useEffect(() => {
     const handleFirstInteraction = () => unlockAudio();
@@ -102,7 +92,11 @@ function App() {
     };
   }, []);
 
-  const returnToFocus = () => setCurrentMode("focus");
+  const returnToFocus = () => setCurrentStage("focus");
+  const startAnotherFocus = () => {
+    autoStartFocusRef.current = true;
+    setCurrentStage("focus");
+  };
   const changeFocusDuration = (duration: FocusDurationMinutes) => {
     setFocusDuration(duration);
     if (countdown.status === "idle") {
@@ -153,7 +147,7 @@ function App() {
           onClear={() => setThoughts([])}
         />
 
-        {currentMode === "focus" && (
+        {currentStage === "focus" && (
           <TimerCard
             currentTask={currentTask}
             focusDuration={focusDuration}
@@ -169,14 +163,29 @@ function App() {
           />
         )}
 
-        {currentMode === "breathing" && (
-          <BreathingGuide
-            remainingSeconds={countdown.remainingSeconds}
-            totalSeconds={SESSION_DURATIONS.breathing}
+        {currentStage === "focusComplete" && (
+          <FocusComplete
+            onBreathing={() => setCurrentStage("breathingPrep")}
+            onSquat={() => setCurrentStage("squat")}
+            onFocus={startAnotherFocus}
           />
         )}
 
-        {currentMode === "squat" && (
+        {currentStage === "breathingPrep" && (
+          <BreathingPreparation
+            onStart={() => setCurrentStage("breathing")}
+            onSkip={returnToFocus}
+          />
+        )}
+
+        {currentStage === "breathing" && (
+          <BreathingGuide
+            remainingSeconds={0}
+            totalSeconds={0}
+          />
+        )}
+
+        {currentStage === "squat" && (
           <SquatBreak
             onComplete={() => {
               playCompletionCue();
