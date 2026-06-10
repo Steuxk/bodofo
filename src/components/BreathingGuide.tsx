@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+import { playBreathingCue } from "../audio/audioFeedback";
 import { formatTime } from "../utils/time";
 
 type BreathingPhase = "inhale" | "hold" | "exhale";
@@ -28,6 +30,13 @@ export function BreathingGuide({
   totalSeconds,
 }: BreathingGuideProps) {
   const phase = getBreathingPhase(remainingSeconds, totalSeconds);
+  const previousPhase = useRef<BreathingPhase | null>(null);
+
+  useEffect(() => {
+    if (remainingSeconds <= 0 || previousPhase.current === phase) return;
+    previousPhase.current = phase;
+    playBreathingCue(phase);
+  }, [phase, remainingSeconds]);
 
   return (
     <section

@@ -1,4 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
+import {
+  playCompletionCue,
+  unlockAudio,
+} from "./audio/audioFeedback";
 import { BreathingGuide } from "./components/BreathingGuide";
 import { CompanionModal } from "./components/CompanionModal";
 import { FloatingCompanion } from "./components/FloatingCompanion";
@@ -46,6 +50,7 @@ function App() {
 
   const handleTimerComplete = useCallback(() => {
     if (currentMode === "focus") {
+      playCompletionCue();
       const completedSessions = focusSessionCount + 1;
       const isSquatSession = completedSessions % 2 === 0;
       setFocusSessionCount(completedSessions);
@@ -54,6 +59,7 @@ function App() {
     }
 
     if (currentMode === "breathing") {
+      playCompletionCue();
       setCurrentMode("focus");
     }
   }, [currentMode, focusSessionCount, setFocusSessionCount]);
@@ -82,6 +88,19 @@ function App() {
     // The stable mode boundary intentionally owns each fresh countdown.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMode]);
+
+  useEffect(() => {
+    const handleFirstInteraction = () => unlockAudio();
+    window.addEventListener("pointerdown", handleFirstInteraction, {
+      once: true,
+    });
+    window.addEventListener("keydown", handleFirstInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+    };
+  }, []);
 
   const returnToFocus = () => setCurrentMode("focus");
   const changeFocusDuration = (duration: FocusDurationMinutes) => {
@@ -159,7 +178,10 @@ function App() {
 
         {currentMode === "squat" && (
           <SquatBreak
-            onComplete={returnToFocus}
+            onComplete={() => {
+              playCompletionCue();
+              returnToFocus();
+            }}
             onSkip={returnToFocus}
           />
         )}
