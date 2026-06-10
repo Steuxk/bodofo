@@ -38,7 +38,7 @@ npm run dev
 ```
 
 The focus override is measured in seconds. The default breathing tick is one
-second and the default squat interval is 1.5 seconds.
+second and the default squat interval is 2 seconds.
 
 ## Architecture
 
@@ -50,7 +50,8 @@ second and the default squat interval is 1.5 seconds.
 - `src/hooks/useCountdown.ts`
   - Generic focus/breathing countdown with idle, running, and paused states.
 - `src/hooks/useSquatCountdown.ts`
-  - Automatic ten-squat progression with pause, resume, restart, and completion.
+  - Wall-clock-based ten-squat progression with pause, resume, restart, and
+    completion.
 - `src/hooks/useLocalStorage.ts`
   - Generic persisted-state hook.
 - `src/components/TimerCard.tsx`
@@ -67,7 +68,12 @@ second and the default squat interval is 1.5 seconds.
 - `src/hooks/useBreathingExercise.ts`
   - Derives breathing phase countdown, current set, and remaining sets.
 - `src/components/SquatBreak.tsx`
-  - Automatic movement-break UI.
+  - Automatic movement-break UI with slime guidance and a deliberate
+    completion state.
+- `src/components/SquatSlime.tsx`
+  - Reusable SVG movement companion that animates once per squat.
+- `src/components/ConfettiBurst.tsx`
+  - Lightweight, deterministic CSS confetti for squat completion.
 - `src/components/ThoughtDump.tsx`
   - Persistent thoughts, copy feedback, and PDF export.
 - `src/components/FloatingCompanion.tsx`
@@ -102,7 +108,9 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - Inhale uses a soft rising cue.
 - Hold uses a short steady cue.
 - Exhale uses a soft falling cue.
-- Focus, breathing, and squat completion use a separate gentle chime.
+- Each squat uses a short soft boop.
+- Squat completion uses a distinct three-note celebration cue.
+- Focus and breathing completion use a separate gentle chime.
 - Audio failures must remain silent and must never interrupt the timer flow.
 - Do not trigger cues on every countdown tick. Phase cues fire only when the
   phase value changes.
@@ -128,6 +136,8 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - `c80e24b` adds thought copy and PDF export.
 - `43daed1` adds the calmer visual system and SVG buddies.
 - `15a7686` automates squat breaks.
+- `8f463e3` adds stable squat timing, slime guidance, and per-squat boops.
+- `ab39c11` adds the manual squat celebration state and confetti.
 - `d8b05f9` adds persisted focus length selection.
 
 ## Verification Notes
@@ -139,7 +149,8 @@ Before handing work back:
 3. Test the complete shortened flow in a browser.
 4. Check focus pause/resume/reset and persisted duration.
 5. Check inhale, hold, and exhale phase boundaries.
-6. Check squat pause/resume/restart/skip.
+6. Check squat pause/resume/restart/skip, per-count animation, and manual
+   completion return.
 7. Check the 390px responsive layout for horizontal overflow.
 8. Check the browser console for warnings and errors.
 

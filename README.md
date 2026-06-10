@@ -34,7 +34,7 @@ VITE_BREATHING_TICK_MS=100 npm run dev
 
 The focus override is measured in seconds. Without overrides, the selected
 focus length is used, breathing seconds advance every second, and squats
-advance every 1.5 seconds.
+advance every 2 seconds.
 
 ## Extension points
 
@@ -45,3 +45,5 @@ advance every 1.5 seconds.
   added without changing persisted note data.
 - Focus, breathing, and squat views are separate components coordinated by the
   small mode state machine in `src/App.tsx`.
+- Squat timing is wall-clock based, while the slime, synthesized cues, and
+  completion confetti remain separate presentation components.
