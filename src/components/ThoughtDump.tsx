@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type { Mode, Thought } from "../types/bodofo";
 import {
+  copyText,
   exportThoughtDumpPdf,
   formatThoughtDumpText,
 } from "../utils/thoughtExport";
@@ -40,9 +41,7 @@ export function ThoughtDump({
 
   const copyThoughts = async () => {
     try {
-      await navigator.clipboard.writeText(
-        formatThoughtDumpText({ currentTask, thoughts }),
-      );
+      await copyText(formatThoughtDumpText({ currentTask, thoughts }));
       showStatus("Copied to clipboard");
     } catch {
       showStatus("Copy was not available");
