@@ -54,6 +54,54 @@ function playTone(
   oscillator.stop(endAt + 0.02);
 }
 
+function playSlimeBloop(context: AudioContext) {
+  const startAt = context.currentTime;
+  const endAt = startAt + 0.3;
+  const filter = context.createBiquadFilter();
+  const main = context.createOscillator();
+  const mainGain = context.createGain();
+  const bubble = context.createOscillator();
+  const bubbleGain = context.createGain();
+
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(1200, startAt);
+  filter.Q.setValueAtTime(1.8, startAt);
+
+  main.type = "sine";
+  main.frequency.setValueAtTime(190, startAt);
+  main.frequency.exponentialRampToValueAtTime(320, startAt + 0.08);
+  main.frequency.exponentialRampToValueAtTime(230, endAt);
+  main.detune.setValueAtTime(-8, startAt);
+  main.detune.linearRampToValueAtTime(12, startAt + 0.12);
+  main.detune.linearRampToValueAtTime(0, endAt);
+
+  mainGain.gain.setValueAtTime(0.0001, startAt);
+  mainGain.gain.exponentialRampToValueAtTime(0.04, startAt + 0.025);
+  mainGain.gain.exponentialRampToValueAtTime(0.022, startAt + 0.12);
+  mainGain.gain.exponentialRampToValueAtTime(0.0001, endAt);
+
+  bubble.type = "triangle";
+  bubble.frequency.setValueAtTime(410, startAt + 0.045);
+  bubble.frequency.exponentialRampToValueAtTime(560, startAt + 0.1);
+  bubble.frequency.exponentialRampToValueAtTime(380, startAt + 0.21);
+
+  bubbleGain.gain.setValueAtTime(0.0001, startAt);
+  bubbleGain.gain.setValueAtTime(0.0001, startAt + 0.04);
+  bubbleGain.gain.exponentialRampToValueAtTime(0.011, startAt + 0.075);
+  bubbleGain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.22);
+
+  main.connect(mainGain);
+  bubble.connect(bubbleGain);
+  mainGain.connect(filter);
+  bubbleGain.connect(filter);
+  filter.connect(context.destination);
+
+  main.start(startAt);
+  bubble.start(startAt);
+  main.stop(endAt + 0.02);
+  bubble.stop(endAt + 0.02);
+}
+
 async function withAudio(
   key: string,
   play: (context: AudioContext) => void,
@@ -111,7 +159,7 @@ export function playCompletionCue() {
 
 export function playSquatCue() {
   void withAudio("squat", (context) => {
-    playTone(context, 220, 330, 0.16);
+    playSlimeBloop(context);
   });
 }
 
