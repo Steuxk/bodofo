@@ -57,6 +57,20 @@ input:disabled {
     linear-gradient(180deg, var(--sky) 0%, #dff3ed 66%, #f9e3a5 66%);
 }
 
+.app--breathing {
+  --sky: #d8d7f1;
+  --ocean: #758ec0;
+  --coral: #8d87bf;
+  background: linear-gradient(180deg, #d8d7f1 0%, #e8edf6 66%, #d9e4cf 66%);
+}
+
+.app--squat {
+  --sky: #f8dfa4;
+  --ocean: #ef9b62;
+  --coral: #e96f67;
+  background: linear-gradient(180deg, #f9dfa6 0%, #fff0cd 66%, #eebc68 66%);
+}
+
 .site-header {
   position: relative;
   z-index: 4;
@@ -258,6 +272,48 @@ input:disabled {
   box-shadow: 0 7px 0 rgba(23, 50, 77, 0.14);
 }
 
+.primary-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 0 rgba(23, 50, 77, 0.12);
+}
+
+.primary-button:focus-visible,
+.text-button:focus-visible,
+.task-field input:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+}
+
+.primary-button:disabled {
+  opacity: 0.45;
+}
+
+.timer-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.text-button {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 16px;
+  color: var(--navy);
+  background: transparent;
+  font-weight: 800;
+}
+
+.text-button:not(:disabled):hover {
+  background: rgba(23, 50, 77, 0.07);
+}
+
+.text-button:disabled {
+  opacity: 0.38;
+}
+
 .gentle-copy {
   margin: 20px 0 0;
   color: rgba(23, 50, 77, 0.62);
@@ -310,6 +366,135 @@ input:disabled {
   background: var(--yellow);
   font: 700 1.6rem/1 "Fredoka", sans-serif;
   box-shadow: inset -10px -10px 0 rgba(237, 154, 95, 0.23);
+}
+
+.break-card {
+  min-height: 560px;
+}
+
+.breathing-card .mode-pill {
+  color: #5b5688;
+  background: rgba(170, 162, 215, 0.22);
+}
+
+.breathing-orb {
+  display: grid;
+  width: 170px;
+  height: 170px;
+  margin: 30px auto 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(170, 162, 215, 0.18);
+}
+
+.breathing-orb span {
+  display: block;
+  width: 92px;
+  height: 92px;
+  border-radius: 52% 48% 45% 55% / 48% 43% 57% 52%;
+  background: linear-gradient(145deg, #8d87bf, #72b4c5);
+  box-shadow:
+    0 0 0 13px rgba(170, 162, 215, 0.17),
+    0 18px 40px rgba(84, 81, 132, 0.2);
+}
+
+.breathing-orb--inhale span {
+  animation: breathe-in 4s ease-in-out both;
+}
+
+.breathing-orb--hold span {
+  transform: scale(1.46);
+}
+
+.breathing-orb--exhale span {
+  animation: breathe-out 6s ease-in-out both;
+}
+
+.breathing-instruction strong,
+.breathing-instruction span {
+  display: block;
+}
+
+.breathing-instruction strong {
+  font: 600 1.6rem/1 "Fredoka", sans-serif;
+  text-transform: capitalize;
+}
+
+.breathing-instruction span {
+  margin-top: 7px;
+  color: rgba(23, 50, 77, 0.58);
+  font-size: 0.85rem;
+}
+
+.break-time {
+  display: block;
+  margin-top: 18px;
+  color: rgba(23, 50, 77, 0.58);
+  font: 600 1.1rem/1 "Fredoka", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.squat-card .mode-pill {
+  color: #9a522e;
+  background: rgba(243, 199, 91, 0.28);
+}
+
+.squat-counter {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin: 34px 0 22px;
+}
+
+.squat-counter strong {
+  font: 600 7.5rem/0.8 "Fredoka", sans-serif;
+  letter-spacing: -0.08em;
+}
+
+.squat-counter span {
+  margin-left: 14px;
+  color: rgba(23, 50, 77, 0.58);
+  font-weight: 800;
+}
+
+.squat-progress {
+  width: min(320px, 90%);
+  height: 12px;
+  margin: 0 auto 28px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(23, 50, 77, 0.1);
+}
+
+.squat-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--coral), var(--orange));
+  transition: width 250ms ease;
+}
+
+.squat-button {
+  margin-bottom: 14px;
+  background: var(--coral);
+}
+
+@keyframes breathe-in {
+  from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1.46);
+  }
+}
+
+@keyframes breathe-out {
+  from {
+    transform: scale(1.46);
+  }
+  to {
+    transform: scale(0.75);
+  }
 }
 
 .sky-decor,

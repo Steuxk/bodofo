@@ -1,6 +1,58 @@
+import { useCallback, useEffect, useState } from "react";
+import { BreathingGuide } from "./components/BreathingGuide";
+import { SquatBreak } from "./components/SquatBreak";
+import { TimerCard } from "./components/TimerCard";
+import { SESSION_DURATIONS } from "./config";
+import { useCountdown } from "./hooks/useCountdown";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import type { Mode } from "./types/bodofo";
+
 function App() {
+  const [currentMode, setCurrentMode] = useState<Mode>("focus");
+  const [currentTask, setCurrentTask] = useLocalStorage(
+    "bodofo:current-task",
+    "",
+  );
+  const [focusSessionCount, setFocusSessionCount] = useLocalStorage(
+    "bodofo:focus-session-count",
+    0,
+  );
+  const [squatCount, setSquatCount] = useState(0);
+
+  const handleTimerComplete = useCallback(() => {
+    if (currentMode === "focus") {
+      const completedSessions = focusSessionCount + 1;
+      setFocusSessionCount(completedSessions);
+      setCurrentMode(completedSessions % 2 === 0 ? "squat" : "breathing");
+      return;
+    }
+
+    if (currentMode === "breathing") {
+      setCurrentMode("focus");
+    }
+  }, [currentMode, focusSessionCount, setFocusSessionCount]);
+
+  const countdown = useCountdown({
+    initialSeconds: SESSION_DURATIONS[currentMode],
+    onComplete: handleTimerComplete,
+  });
+
+  useEffect(() => {
+    countdown.reset(SESSION_DURATIONS[currentMode]);
+    if (currentMode === "breathing") {
+      countdown.start();
+    }
+    if (currentMode === "squat") {
+      setSquatCount(0);
+    }
+    // The stable mode boundary intentionally owns each fresh countdown.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentMode]);
+
+  const returnToFocus = () => setCurrentMode("focus");
+
   return (
-    <main className="app app--focus">
+    <main className={`app app--${currentMode}`}>
       <div className="sky-decor" aria-hidden="true">
         <span className="cloud cloud--one" />
         <span className="cloud cloud--two" />
@@ -27,29 +79,37 @@ function App() {
           <p>Your thoughts will have a cozy place to wait here.</p>
         </aside>
 
-        <section className="timer-card" aria-labelledby="mode-title">
-          <div className="mode-pill">
-            <span className="mode-pill__dot" />
-            Focus mode
-          </div>
-          <p className="session-label">Session 01</p>
-          <h1 id="mode-title">One gentle thing at a time.</h1>
-          <time className="timer-display" dateTime="PT25M">
-            25:00
-          </time>
-          <label className="task-field">
-            <span>I am focusing on</span>
-            <input
-              type="text"
-              placeholder="What needs your attention?"
-              disabled
-            />
-          </label>
-          <button className="primary-button" type="button" disabled>
-            Start focusing
-          </button>
-          <p className="gentle-copy">Stay with this one thing.</p>
-        </section>
+        {currentMode === "focus" && (
+          <TimerCard
+            currentTask={currentTask}
+            focusSessionCount={focusSessionCount}
+            remainingSeconds={countdown.remainingSeconds}
+            status={countdown.status}
+            onTaskChange={setCurrentTask}
+            onStart={countdown.start}
+            onPause={countdown.pause}
+            onResume={countdown.resume}
+            onReset={() => countdown.reset()}
+          />
+        )}
+
+        {currentMode === "breathing" && (
+          <BreathingGuide
+            remainingSeconds={countdown.remainingSeconds}
+            totalSeconds={SESSION_DURATIONS.breathing}
+          />
+        )}
+
+        {currentMode === "squat" && (
+          <SquatBreak
+            squatCount={squatCount}
+            onIncrement={() =>
+              setSquatCount((count) => Math.min(10, count + 1))
+            }
+            onDone={returnToFocus}
+            onSkip={returnToFocus}
+          />
+        )}
 
         <aside className="placeholder-card placeholder-card--buddy">
           <span className="eyebrow">Body double</span>
@@ -77,4 +137,3 @@ function App() {
 }
 
 export default App;
-
