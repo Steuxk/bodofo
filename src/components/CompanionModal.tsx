@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BUDDIES } from "../data/buddies";
 import type { BuddySettings, BuddyType } from "../types/bodofo";
+import { BuddySvg } from "./buddies/BuddySvg";
 
 interface CompanionModalProps {
   isOpen: boolean;
@@ -88,10 +89,10 @@ export function CompanionModal({
               />
               <span
                 className="buddy-option__visual"
-                style={{ background: buddy.visual.accent }}
+                style={{ background: buddy.accent }}
                 aria-hidden="true"
               >
-                {buddy.visual.source}
+                <BuddySvg type={buddy.type} />
               </span>
               <strong>{buddy.label}</strong>
             </label>

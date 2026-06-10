@@ -101,10 +101,10 @@ function App() {
 
   return (
     <main className={`app app--${currentMode}`}>
-      <div className="sky-decor" aria-hidden="true">
-        <span className="cloud cloud--one" />
-        <span className="cloud cloud--two" />
-        <span className="sun" />
+      <div className="room-accents" aria-hidden="true">
+        <span />
+        <span />
+        <span />
       </div>
 
       <header className="site-header">
@@ -180,17 +180,6 @@ function App() {
         }}
       />
 
-      <footer className="village-footer" aria-hidden="true">
-        <div className="hill hill--back" />
-        <div className="house house--one">
-          <span />
-        </div>
-        <div className="house house--two">
-          <span />
-        </div>
-        <div className="wave wave--one" />
-        <div className="wave wave--two" />
-      </footer>
     </main>
   );
 }

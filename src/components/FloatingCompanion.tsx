@@ -1,5 +1,6 @@
 import { getBuddy } from "../data/buddies";
 import type { BuddySettings, Mode } from "../types/bodofo";
+import { BuddySvg } from "./buddies/BuddySvg";
 
 interface FloatingCompanionProps {
   mode: Mode;
@@ -24,12 +25,10 @@ export function FloatingCompanion({
       >
         <span
           className="companion-visual"
-          data-visual-kind={buddy.visual.kind}
-          style={{ "--buddy-accent": buddy.visual.accent } as React.CSSProperties}
+          style={{ "--buddy-accent": buddy.accent } as React.CSSProperties}
           aria-hidden="true"
         >
-          <span className="companion-visual__face">{buddy.visual.source}</span>
-          <span className="companion-visual__desk" />
+          <BuddySvg type={buddy.type} mode={mode} />
         </span>
         <span className="companion-copy">
           <strong>{settings.name}</strong>
@@ -42,4 +41,3 @@ export function FloatingCompanion({
     </aside>
   );
 }
-
