@@ -32,18 +32,19 @@ Short-cycle testing:
 
 ```bash
 VITE_FOCUS_DURATION=3 \
-VITE_BREATHING_DURATION=14 \
 VITE_SQUAT_INTERVAL_SECONDS=0.25 \
+VITE_BREATHING_TICK_MS=100 \
 npm run dev
 ```
 
-Environment durations are seconds. The default breathing duration is two
-minutes and the default squat interval is 1.5 seconds.
+The focus override is measured in seconds. The default breathing tick is one
+second and the default squat interval is 1.5 seconds.
 
 ## Architecture
 
 - `src/App.tsx`
-  - Coordinates the `focus`, `breathing`, and `squat` mode state machine.
+  - Coordinates focus, completion choice, breathing preparation, breathing,
+    breathing completion, and squat stages.
   - Owns persisted task, focus count, focus duration, thoughts, and buddy.
   - Connects timer completion and audio feedback.
 - `src/hooks/useCountdown.ts`
@@ -54,9 +55,17 @@ minutes and the default squat interval is 1.5 seconds.
   - Generic persisted-state hook.
 - `src/components/TimerCard.tsx`
   - Focus task, duration selector, timer, and controls.
+- `src/components/FocusComplete.tsx`
+  - Lets the user choose breathing, squats, or another focus after completion.
+- `src/components/BreathingPreparation.tsx`
+  - Explains the breathing pattern and requires an explicit start.
 - `src/components/BreathingGuide.tsx`
-  - Current 4-second inhale, 4-second hold, 6-second exhale presentation.
+  - Four sets of 4-second inhale, 7-second hold, and 8-second exhale.
   - Fires one audio cue when each phase changes.
+- `src/components/BreathingComplete.tsx`
+  - Deliberate completion state before starting focus again.
+- `src/hooks/useBreathingExercise.ts`
+  - Derives breathing phase countdown, current set, and remaining sets.
 - `src/components/SquatBreak.tsx`
   - Automatic movement-break UI.
 - `src/components/ThoughtDump.tsx`
@@ -108,20 +117,11 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - Keep manual edits scoped and make small milestone commits.
 - Preserve user changes in a dirty worktree.
 
-## Current Worktree Warning
-
-At handoff time, `src/config.ts` has an uncommitted user change:
-
-```ts
-export const FOCUS_DURATION_OPTIONS = [0.1, 15, 25, 30] as const;
-```
-
-Do not discard it. `FocusDurationMinutes` currently permits only
-`15 | 25 | 30`, so verify the intended development-only `0.1` option and fix
-the typing deliberately before committing related work.
-
 ## Recent Milestones
 
+- `eef3aed` adds the four-set 4-7-8 breathing flow.
+- `9d57594` adds user-controlled post-focus break choices.
+- `8bb063f` adds the 0.1-minute development focus option.
 - `d2222d8` adds interaction-gated breathing phase and completion audio cues.
 - `48bca6d` removes uppercase styling.
 - `f4a3419` adds a restricted-browser clipboard fallback.

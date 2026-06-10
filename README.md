@@ -3,9 +3,10 @@
 A cozy, frontend-only body-doubling focus companion built with React,
 TypeScript, and Vite.
 
-Focus sessions can run for 15, 25, or 30 minutes. Each focus is followed by a
-breathing break, with an automatic ten-squat break after every second focus.
-The thought dock can copy its contents as text or export them as a PDF.
+Focus sessions can run for 15, 25, or 30 minutes. When focus ends, the user
+chooses a four-set 4-7-8 breathing exercise, a ten-squat break, or another
+focus session. The thought dock can copy its contents as text or export them
+as a PDF.
 
 ## Run locally
 
@@ -26,13 +27,14 @@ npm run build
 Copy `.env.example` to `.env.local`, or start Vite with temporary values:
 
 ```bash
-VITE_FOCUS_DURATION=5 VITE_BREATHING_DURATION=5 \
-VITE_SQUAT_INTERVAL_SECONDS=0.25 npm run dev
+VITE_FOCUS_DURATION=5 \
+VITE_SQUAT_INTERVAL_SECONDS=0.25 \
+VITE_BREATHING_TICK_MS=100 npm run dev
 ```
 
-The development overrides are measured in seconds. Without overrides, the
-selected focus length is used, breathing lasts 2 minutes, and squats advance
-every 1.5 seconds.
+The focus override is measured in seconds. Without overrides, the selected
+focus length is used, breathing seconds advance every second, and squats
+advance every 1.5 seconds.
 
 ## Extension points
 
