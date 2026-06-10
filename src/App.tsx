@@ -117,9 +117,7 @@ function App() {
             <small>Body Doubling Focus</small>
           </span>
         </a>
-        <p className="tagline">
-          Stay focused. <span>Breathe. Move. Come back.</span>
-        </p>
+        
       </header>
 
       <section className="focus-village" id="focus-room">

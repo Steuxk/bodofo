@@ -112,11 +112,7 @@ export function TimerCard({
           Reset
         </button>
       </div>
-      <p className="gentle-copy">
-        {status === "running"
-          ? "You can park distractions in your notes."
-          : "Stay with this one thing."}
-      </p>
+      
     </section>
   );
 }

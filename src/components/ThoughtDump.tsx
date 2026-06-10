@@ -62,7 +62,7 @@ export function ThoughtDump({
       <header className="thought-dump__header">
         <div>
           <span className="eyebrow">Thought dock</span>
-          <h2>Park it for later.</h2>
+          <h2>Park it for later</h2>
         </div>
         <span
           className="thought-count"
@@ -75,7 +75,6 @@ export function ThoughtDump({
       </header>
 
       <form className="thought-form" onSubmit={handleSubmit}>
-        <label htmlFor="thought-input">You can park that thought here.</label>
         <div>
           <input
             id="thought-input"
@@ -92,7 +91,7 @@ export function ThoughtDump({
 
       <div className="thought-list" aria-live="polite">
         {thoughts.length === 0 ? (
-          <p className="empty-thoughts">Nothing waiting. Nice and clear.</p>
+          <p className="empty-thoughts">Nothing waiting.</p>
         ) : (
           thoughts.map((thought, index) => (
             <article
@@ -122,7 +121,7 @@ export function ThoughtDump({
             Copy
           </button>
           <button type="button" onClick={exportPdf}>
-            Export PDF
+            Export thoughts
           </button>
         </div>
         <span role="status">{actionStatus}</span>

@@ -55,8 +55,7 @@ export function CompanionModal({
         >
           ×
         </button>
-        <span className="eyebrow">A little company</span>
-        <h2 id="buddy-modal-title">Choose your buddy</h2>
+        <h2 id="buddy-modal-title">A little company</h2>
         <p>Pick someone who feels easy to work beside.</p>
 
         <label className="modal-field" htmlFor="buddy-name">
@@ -72,7 +71,7 @@ export function CompanionModal({
         </label>
 
         <fieldset className="buddy-options">
-          <legend>Buddy type</legend>
+          <legend>Select buddy type</legend>
           {BUDDIES.map((buddy) => (
             <label
               className={`buddy-option ${
@@ -109,7 +108,7 @@ export function CompanionModal({
             })
           }
         >
-          Bring them along
+          Bring them along!
         </button>
       </section>
     </div>
