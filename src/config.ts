@@ -17,4 +17,3 @@ export function getFocusDurationSeconds(minutes: number) {
 export const SQUAT_TARGET = 10;
 export const SQUAT_INTERVAL_MS =
   readDuration(import.meta.env.VITE_SQUAT_INTERVAL_SECONDS, 2) * 1000;
-export const SQUAT_DONE_DELAY_MS = 1000;

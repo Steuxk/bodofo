@@ -1,18 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  SQUAT_DONE_DELAY_MS,
   SQUAT_INTERVAL_MS,
   SQUAT_TARGET,
 } from "../config";
 import type { TimerStatus } from "../types/bodofo";
 
-interface UseSquatCountdownOptions {
-  onComplete: () => void;
-}
-
-export function useSquatCountdown({
-  onComplete,
-}: UseSquatCountdownOptions) {
+export function useSquatCountdown() {
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState<TimerStatus>("running");
   const elapsedBeforeRunRef = useRef(0);
@@ -44,9 +37,7 @@ export function useSquatCountdown({
   useEffect(() => {
     if (!isComplete) return;
     setStatus("idle");
-    const timeout = window.setTimeout(onComplete, SQUAT_DONE_DELAY_MS);
-    return () => window.clearTimeout(timeout);
-  }, [isComplete, onComplete]);
+  }, [isComplete]);
 
   const pause = useCallback(() => {
     elapsedBeforeRunRef.current += Date.now() - runStartedAtRef.current;

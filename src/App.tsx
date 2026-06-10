@@ -194,10 +194,7 @@ function App() {
 
         {currentStage === "squat" && (
           <SquatBreak
-            onComplete={() => {
-              playCompletionCue();
-              returnToFocus();
-            }}
+            onFocus={startAnotherFocus}
             onSkip={returnToFocus}
           />
         )}

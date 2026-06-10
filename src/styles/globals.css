@@ -1050,6 +1050,46 @@ input:disabled {
   font-size: 0.86rem;
 }
 
+.confetti-burst {
+  position: relative;
+  width: 1px;
+  height: 1px;
+  margin: 14px auto -14px;
+  pointer-events: none;
+}
+
+.confetti-burst i {
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--confetti-color);
+  opacity: 0;
+  animation: confetti-pop 2.6s ease-out var(--confetti-delay) both;
+}
+
+@keyframes confetti-pop {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  65% {
+    opacity: 0.82;
+    transform:
+      translate(var(--confetti-x), var(--confetti-y))
+      rotate(var(--confetti-rotation));
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(var(--confetti-x), calc(var(--confetti-y) + 64px))
+      rotate(calc(var(--confetti-rotation) + 150deg));
+  }
+}
+
 @keyframes slime-bounce {
   0% {
     transform: translateY(0) scaleX(1.08) scaleY(0.9);

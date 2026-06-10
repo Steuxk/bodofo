@@ -114,3 +114,11 @@ export function playSquatCue() {
     playTone(context, 220, 330, 0.16);
   });
 }
+
+export function playSquatCelebrationCue() {
+  void withAudio("squat-celebration", (context) => {
+    playTone(context, 523, 659, 0.26);
+    playTone(context, 659, 784, 0.3, 0.17);
+    playTone(context, 784, 1047, 0.42, 0.36);
+  });
+}

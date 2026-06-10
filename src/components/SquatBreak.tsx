@@ -1,21 +1,26 @@
 import { useEffect, useRef } from "react";
-import { playSquatCue } from "../audio/audioFeedback";
+import {
+  playSquatCelebrationCue,
+  playSquatCue,
+} from "../audio/audioFeedback";
 import { SQUAT_TARGET } from "../config";
 import { useSquatCountdown } from "../hooks/useSquatCountdown";
+import { ConfettiBurst } from "./ConfettiBurst";
 import { SquatSlime } from "./SquatSlime";
 
 interface SquatBreakProps {
-  onComplete: () => void;
+  onFocus: () => void;
   onSkip: () => void;
 }
 
 export function SquatBreak({
-  onComplete,
+  onFocus,
   onSkip,
 }: SquatBreakProps) {
   const { count, status, isComplete, pause, resume, restart } =
-    useSquatCountdown({ onComplete });
+    useSquatCountdown();
   const previousCountRef = useRef(0);
+  const hasCelebratedRef = useRef(false);
 
   useEffect(() => {
     if (count <= previousCountRef.current) {
@@ -26,6 +31,12 @@ export function SquatBreak({
     playSquatCue();
     previousCountRef.current = count;
   }, [count]);
+
+  useEffect(() => {
+    if (!isComplete || hasCelebratedRef.current) return;
+    hasCelebratedRef.current = true;
+    playSquatCelebrationCue();
+  }, [isComplete]);
 
   return (
     <section
@@ -38,8 +49,9 @@ export function SquatBreak({
       </div>
       <p className="session-label">A little reset</p>
       <h1 id="mode-title">
-        {isComplete ? "Done! Nicely moved." : "Ten squats together."}
+        {isComplete ? "Nice work!" : "Ten squats together."}
       </h1>
+      {isComplete && <ConfettiBurst />}
       <SquatSlime
         bounceKey={count}
         isPaused={status === "paused"}
@@ -50,7 +62,7 @@ export function SquatBreak({
       </div>
       <p className="squat-instruction">
         {isComplete
-          ? "Heading back to focus..."
+          ? "You completed ten squats."
           : status === "paused"
             ? "Paused. Take your time."
             : count === 0
@@ -58,6 +70,11 @@ export function SquatBreak({
               : "One soft bounce, one steady squat."}
       </p>
       <div className="timer-actions">
+        {isComplete && (
+          <button className="primary-button" type="button" onClick={onFocus}>
+            Start focus session
+          </button>
+        )}
         {!isComplete && status === "running" && (
           <button className="primary-button" type="button" onClick={pause}>
             Pause
@@ -73,9 +90,11 @@ export function SquatBreak({
             Restart
           </button>
         )}
-        <button className="text-button" type="button" onClick={onSkip}>
-          Skip for now
-        </button>
+        {!isComplete && (
+          <button className="text-button" type="button" onClick={onSkip}>
+            Skip for now
+          </button>
+        )}
       </div>
     </section>
   );
