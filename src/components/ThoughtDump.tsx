@@ -1,8 +1,13 @@
 import { useState, type FormEvent } from "react";
 import type { Mode, Thought } from "../types/bodofo";
+import {
+  exportThoughtDumpPdf,
+  formatThoughtDumpText,
+} from "../utils/thoughtExport";
 
 interface ThoughtDumpProps {
   mode: Mode;
+  currentTask: string;
   thoughts: Thought[];
   onAdd: (text: string) => void;
   onRemove: (id: string) => void;
@@ -11,12 +16,14 @@ interface ThoughtDumpProps {
 
 export function ThoughtDump({
   mode,
+  currentTask,
   thoughts,
   onAdd,
   onRemove,
   onClear,
 }: ThoughtDumpProps) {
   const [draft, setDraft] = useState("");
+  const [actionStatus, setActionStatus] = useState("");
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -24,6 +31,31 @@ export function ThoughtDump({
     if (!text) return;
     onAdd(text);
     setDraft("");
+  };
+
+  const showStatus = (message: string) => {
+    setActionStatus(message);
+    window.setTimeout(() => setActionStatus(""), 2200);
+  };
+
+  const copyThoughts = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        formatThoughtDumpText({ currentTask, thoughts }),
+      );
+      showStatus("Copied to clipboard");
+    } catch {
+      showStatus("Copy was not available");
+    }
+  };
+
+  const exportPdf = async () => {
+    try {
+      await exportThoughtDumpPdf({ currentTask, thoughts });
+      showStatus("PDF downloaded");
+    } catch {
+      showStatus("PDF export was not available");
+    }
   };
 
   return (
@@ -84,6 +116,18 @@ export function ThoughtDump({
           ))
         )}
       </div>
+
+      <footer className="thought-actions">
+        <div>
+          <button type="button" onClick={copyThoughts}>
+            Copy
+          </button>
+          <button type="button" onClick={exportPdf}>
+            Export PDF
+          </button>
+        </div>
+        <span role="status">{actionStatus}</span>
+      </footer>
 
       {thoughts.length > 0 && (
         <button className="clear-thoughts" type="button" onClick={onClear}>

@@ -123,6 +123,7 @@ function App() {
       <section className="focus-village" id="focus-room">
         <ThoughtDump
           mode={currentMode}
+          currentTask={currentTask}
           thoughts={thoughts}
           onAdd={addThought}
           onRemove={(id) =>

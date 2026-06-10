@@ -541,6 +541,41 @@ input:disabled {
   font-weight: 700;
 }
 
+.thought-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(23, 50, 77, 0.09);
+}
+
+.thought-actions > div {
+  display: flex;
+  gap: 6px;
+}
+
+.thought-actions button {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(23, 50, 77, 0.12);
+  border-radius: 10px;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.58);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.thought-actions button:hover {
+  background: var(--white);
+}
+
+.thought-actions span {
+  color: rgba(23, 50, 77, 0.58);
+  font-size: 0.66rem;
+}
+
 .floating-companion {
   position: fixed;
   z-index: 8;
