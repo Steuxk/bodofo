@@ -1,65 +1,29 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import {
   SQUAT_INTERVAL_MS,
   SQUAT_TARGET,
 } from "../config";
-import type { TimerStatus } from "../types/bodofo";
+import { useElapsedTimer } from "./useElapsedTimer";
 
 export function useSquatCountdown() {
-  const [count, setCount] = useState(0);
-  const [status, setStatus] = useState<TimerStatus>("running");
-  const elapsedBeforeRunRef = useRef(0);
-  const runStartedAtRef = useRef(Date.now());
-  const isComplete = count >= SQUAT_TARGET;
-
-  useEffect(() => {
-    if (status !== "running" || isComplete) return;
-
-    const updateCount = () => {
-      const elapsed =
-        elapsedBeforeRunRef.current + Date.now() - runStartedAtRef.current;
-      setCount(
-        Math.min(SQUAT_TARGET, Math.floor(elapsed / SQUAT_INTERVAL_MS)),
-      );
-    };
-
-    updateCount();
-    const interval = window.setInterval(updateCount, 100);
-    const handleVisibility = () => updateCount();
-    document.addEventListener("visibilitychange", handleVisibility);
-
-    return () => {
-      window.clearInterval(interval);
-      document.removeEventListener("visibilitychange", handleVisibility);
-    };
-  }, [isComplete, status]);
-
-  useEffect(() => {
-    if (!isComplete) return;
-    setStatus("idle");
-  }, [isComplete]);
-
-  const pause = useCallback(() => {
-    elapsedBeforeRunRef.current += Date.now() - runStartedAtRef.current;
-    setStatus("paused");
-  }, []);
-  const resume = useCallback(() => {
-    runStartedAtRef.current = Date.now();
-    setStatus("running");
-  }, []);
-  const restart = useCallback(() => {
-    elapsedBeforeRunRef.current = 0;
-    runStartedAtRef.current = Date.now();
-    setCount(0);
-    setStatus("running");
-  }, []);
+  const timer = useElapsedTimer({
+    autoStart: true,
+    durationMs: SQUAT_TARGET * SQUAT_INTERVAL_MS,
+  });
+  const count = Math.min(
+    SQUAT_TARGET,
+    Math.floor(timer.elapsedMs / SQUAT_INTERVAL_MS),
+  );
+  const restart = () => {
+    timer.reset();
+    timer.start();
+  };
 
   return {
     count,
-    status,
-    isComplete,
-    pause,
-    resume,
+    status: timer.status,
+    isComplete: timer.isComplete,
+    pause: timer.pause,
+    resume: timer.resume,
     restart,
   };
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import {
   BREATHING_PHASES,
   BREATHING_SET_SECONDS,
@@ -7,6 +7,7 @@ import {
   BREATHING_TOTAL_SETS,
 } from "../breathingConfig";
 import type { BreathingAudioPhase } from "../audio/audioFeedback";
+import { useElapsedTimer } from "./useElapsedTimer";
 
 interface UseBreathingExerciseOptions {
   onComplete: () => void;
@@ -15,61 +16,46 @@ interface UseBreathingExerciseOptions {
 export function useBreathingExercise({
   onComplete,
 }: UseBreathingExerciseOptions) {
-  const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const completedRef = useRef(false);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setElapsedSeconds((current) =>
-        Math.min(BREATHING_TOTAL_SECONDS, current + 1),
-      );
-    }, BREATHING_TICK_MS);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (
-      elapsedSeconds < BREATHING_TOTAL_SECONDS ||
-      completedRef.current
-    ) {
-      return;
-    }
-
-    completedRef.current = true;
-    onComplete();
-  }, [elapsedSeconds, onComplete]);
+  const timer = useElapsedTimer({
+    autoStart: true,
+    durationMs: BREATHING_TOTAL_SECONDS * BREATHING_TICK_MS,
+    onComplete,
+  });
 
   return useMemo(() => {
-    const safeElapsed = Math.min(
-      elapsedSeconds,
-      BREATHING_TOTAL_SECONDS - 1,
+    const elapsedExerciseMs = Math.min(
+      BREATHING_TOTAL_SECONDS * 1000 - 1,
+      timer.elapsedMs * (1000 / BREATHING_TICK_MS),
     );
-    const setIndex = Math.floor(safeElapsed / BREATHING_SET_SECONDS);
-    const elapsedInSet = safeElapsed % BREATHING_SET_SECONDS;
-    let phaseStart = 0;
+    const setDurationMs = BREATHING_SET_SECONDS * 1000;
+    const setIndex = Math.floor(elapsedExerciseMs / setDurationMs);
+    const elapsedInSetMs = elapsedExerciseMs % setDurationMs;
+    let phaseStartMs = 0;
     let phase: BreathingAudioPhase = "inhale";
     let phaseDuration: number = BREATHING_PHASES[0].duration;
 
     for (const phaseDefinition of BREATHING_PHASES) {
-      const phaseEnd = phaseStart + phaseDefinition.duration;
-      if (elapsedInSet < phaseEnd) {
+      const phaseEndMs =
+        phaseStartMs + phaseDefinition.duration * 1000;
+      if (elapsedInSetMs < phaseEndMs) {
         phase = phaseDefinition.name;
         phaseDuration = phaseDefinition.duration;
         break;
       }
-      phaseStart = phaseEnd;
+      phaseStartMs = phaseEndMs;
     }
 
-    const elapsedInPhase = elapsedInSet - phaseStart;
+    const elapsedInPhaseMs = elapsedInSetMs - phaseStartMs;
     const currentSet = Math.min(setIndex + 1, BREATHING_TOTAL_SETS);
 
     return {
       phase,
-      phaseSecondsRemaining: phaseDuration - elapsedInPhase,
+      phaseSecondsRemaining: Math.ceil(
+        (phaseDuration * 1000 - elapsedInPhaseMs) / 1000,
+      ),
       currentSet,
       remainingSets: BREATHING_TOTAL_SETS - currentSet,
       totalSets: BREATHING_TOTAL_SETS,
     };
-  }, [elapsedSeconds]);
+  }, [timer.elapsedMs]);
 }
