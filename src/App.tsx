@@ -48,7 +48,7 @@ function App() {
   );
   const [buddySettings, setBuddySettings] = useLocalStorage<BuddySettings>(
     "bodofo:buddy-settings",
-    { name: "Milo", type: "study" },
+    { name: "Stefie", type: "study" },
   );
   const [isBuddyModalOpen, setIsBuddyModalOpen] = useState(false);
   const currentMode: Mode =
