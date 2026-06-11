@@ -8,6 +8,9 @@ chooses a four-set 4-7-8 breathing exercise, a ten-squat break, or another
 focus session. The thought dock can copy its contents as text or export them
 as a PDF.
 
+Focus length choices are shown again before repeat sessions, including after
+breathing and squat breaks.
+
 The visual system uses Quicksand, deep navy glass surfaces, restrained
 bioluminescent accents, and a translucent jelly-like squat companion.
 

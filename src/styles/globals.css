@@ -334,7 +334,8 @@ input:disabled {
 .duration-option {
   display: flex;
   gap: 3px;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   min-height: 42px;
   padding: 0 13px;
   border: 2px solid transparent;
@@ -351,11 +352,13 @@ input:disabled {
 
 .duration-option span {
   font-weight: 600;
+  line-height: 1;
 }
 
 .duration-option small {
   font-size: 0.875rem;
   font-weight: 500;
+  line-height: 1;
 }
 
 .duration-option--selected {
@@ -450,6 +453,23 @@ input:disabled {
   gap: 12px;
   max-width: 460px;
   margin: 0 auto;
+}
+
+.next-focus {
+  max-width: 460px;
+  margin: 28px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(140, 230, 255, 0.14);
+}
+
+.next-focus p {
+  margin: 0 0 16px;
+  color: var(--muted-text);
+  line-height: 1.6;
+}
+
+.next-focus .duration-picker {
+  margin-bottom: 16px;
 }
 
 .choice-button {

@@ -1,10 +1,17 @@
+import type { FocusDurationMinutes } from "../types/bodofo";
+import { FocusDurationPicker } from "./FocusDurationPicker";
+
 interface FocusCompleteProps {
+  focusDuration: FocusDurationMinutes;
+  onDurationChange: (duration: FocusDurationMinutes) => void;
   onBreathing: () => void;
   onSquat: () => void;
   onFocus: () => void;
 }
 
 export function FocusComplete({
+  focusDuration,
+  onDurationChange,
   onBreathing,
   onSquat,
   onFocus,
@@ -32,12 +39,18 @@ export function FocusComplete({
           <strong>Start squat exercise</strong>
           <span>Ten gently paced squats</span>
         </button>
-        <button className="choice-button" type="button" onClick={onFocus}>
-          <strong>Start another focus session</strong>
-          <span>Return directly to your timer</span>
+      </div>
+      <div className="next-focus">
+        <p>Or choose the length of your next focus session.</p>
+        <FocusDurationPicker
+          focusDuration={focusDuration}
+          name="focus-complete-focus-duration"
+          onChange={onDurationChange}
+        />
+        <button className="primary-button" type="button" onClick={onFocus}>
+          Start another focus session
         </button>
       </div>
     </section>
   );
 }
-

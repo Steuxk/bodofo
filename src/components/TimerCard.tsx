@@ -1,9 +1,9 @@
-import { FOCUS_DURATION_OPTIONS } from "../config";
 import type {
   FocusDurationMinutes,
   TimerStatus,
 } from "../types/bodofo";
 import { formatTime } from "../utils/time";
+import { FocusDurationPicker } from "./FocusDurationPicker";
 
 interface TimerCardProps {
   currentTask: string;
@@ -66,31 +66,11 @@ export function TimerCard({
         />
       </label>
       {status !== "running" && (
-        <fieldset className="duration-picker">
-          <legend>Focus length</legend>
-          <div>
-            {FOCUS_DURATION_OPTIONS.map((duration) => (
-              <label
-                className={
-                  focusDuration === duration
-                    ? "duration-option duration-option--selected"
-                    : "duration-option"
-                }
-                key={duration}
-              >
-                <input
-                  type="radio"
-                  name="focus-duration"
-                  value={duration}
-                  checked={focusDuration === duration}
-                  onChange={() => onDurationChange(duration)}
-                />
-                <span>{duration}</span>
-                <small>min</small>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <FocusDurationPicker
+          focusDuration={focusDuration}
+          name="focus-duration"
+          onChange={onDurationChange}
+        />
       )}
       <div className="timer-actions">
         {status === "idle" && (

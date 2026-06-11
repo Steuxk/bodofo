@@ -61,20 +61,24 @@ second and the default squat interval is 2 seconds.
   - Generic persisted-state hook.
 - `src/components/TimerCard.tsx`
   - Focus task, duration selector, timer, and controls.
+- `src/components/FocusDurationPicker.tsx`
+  - Shared focus-length choices used before initial and repeat sessions.
 - `src/components/FocusComplete.tsx`
-  - Lets the user choose breathing, squats, or another focus after completion.
+  - Lets the user choose breathing, squats, or a duration for another focus
+    after completion.
 - `src/components/BreathingPreparation.tsx`
   - Explains the breathing pattern and requires an explicit start.
 - `src/components/BreathingGuide.tsx`
   - Four sets of 4-second inhale, 7-second hold, and 8-second exhale.
   - Fires one audio cue when each phase changes.
 - `src/components/BreathingComplete.tsx`
-  - Deliberate completion state before starting focus again.
+  - Deliberate completion state with focus-length choices before starting
+    again.
 - `src/hooks/useBreathingExercise.ts`
   - Derives breathing phase countdown, current set, and remaining sets.
 - `src/components/SquatBreak.tsx`
-  - Automatic movement-break UI with slime guidance and a deliberate
-    completion state.
+  - Automatic movement-break UI with slime guidance and a completion state
+    that surfaces focus-length choices.
 - `src/components/SquatSlime.tsx`
   - Reusable translucent SVG movement companion that animates once per squat.
 - `src/components/ConfettiBurst.tsx`

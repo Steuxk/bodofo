@@ -166,6 +166,8 @@ function App() {
 
         {currentStage === "focusComplete" && (
           <FocusComplete
+            focusDuration={focusDuration}
+            onDurationChange={changeFocusDuration}
             onBreathing={() => setCurrentStage("breathingPrep")}
             onSquat={() => setCurrentStage("squat")}
             onFocus={startAnotherFocus}
@@ -189,11 +191,17 @@ function App() {
         )}
 
         {currentStage === "breathingComplete" && (
-          <BreathingComplete onFocus={startAnotherFocus} />
+          <BreathingComplete
+            focusDuration={focusDuration}
+            onDurationChange={changeFocusDuration}
+            onFocus={startAnotherFocus}
+          />
         )}
 
         {currentStage === "squat" && (
           <SquatBreak
+            focusDuration={focusDuration}
+            onDurationChange={changeFocusDuration}
             onFocus={startAnotherFocus}
             onSkip={returnToFocus}
           />

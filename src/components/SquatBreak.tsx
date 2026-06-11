@@ -5,15 +5,21 @@ import {
 } from "../audio/audioFeedback";
 import { SQUAT_TARGET } from "../config";
 import { useSquatCountdown } from "../hooks/useSquatCountdown";
+import type { FocusDurationMinutes } from "../types/bodofo";
 import { ConfettiBurst } from "./ConfettiBurst";
+import { FocusDurationPicker } from "./FocusDurationPicker";
 import { SquatSlime } from "./SquatSlime";
 
 interface SquatBreakProps {
+  focusDuration: FocusDurationMinutes;
+  onDurationChange: (duration: FocusDurationMinutes) => void;
   onFocus: () => void;
   onSkip: () => void;
 }
 
 export function SquatBreak({
+  focusDuration,
+  onDurationChange,
   onFocus,
   onSkip,
 }: SquatBreakProps) {
@@ -69,6 +75,13 @@ export function SquatBreak({
               ? "Get ready. Follow the slime's gentle bounce."
               : "One soft bounce, one steady squat."}
       </p>
+      {isComplete && (
+        <FocusDurationPicker
+          focusDuration={focusDuration}
+          name="squat-complete-focus-duration"
+          onChange={onDurationChange}
+        />
+      )}
       <div className="timer-actions">
         {isComplete && (
           <button className="primary-button" type="button" onClick={onFocus}>
