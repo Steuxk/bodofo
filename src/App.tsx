@@ -3,6 +3,7 @@ import {
   playCompletionCue,
   unlockAudio,
 } from "./audio/audioFeedback";
+import { AboutModal } from "./components/AboutModal";
 import { BreathingGuide } from "./components/BreathingGuide";
 import { BreathingComplete } from "./components/BreathingComplete";
 import { BreathingPreparation } from "./components/BreathingPreparation";
@@ -51,6 +52,9 @@ function App() {
     { name: "Stefie", type: "study" },
   );
   const [isBuddyModalOpen, setIsBuddyModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [isAboutTooltipVisible, setIsAboutTooltipVisible] = useState(false);
+  const aboutButtonRef = useRef<HTMLButtonElement>(null);
   const currentMode: Mode =
     currentStage === "squat"
       ? "squat"
@@ -114,6 +118,10 @@ function App() {
       },
     ]);
   };
+  const closeAboutModal = () => {
+    setIsAboutModalOpen(false);
+    window.setTimeout(() => aboutButtonRef.current?.focus(), 0);
+  };
 
   return (
     <main className={`app app--${currentMode}`}>
@@ -124,14 +132,47 @@ function App() {
       </div>
 
       <header className="site-header">
-        <a className="brand" href="#focus-room" aria-label="BoDoFo home">
-          <span className="brand__mark">B</span>
-          <span>
-            <strong>BoDoFo</strong>
-            <small>Body Doubling Focus</small>
+        <div className="brand-group">
+          <a className="brand" href="#focus-room" aria-label="BoDoFo home">
+            <span className="brand__mark">B</span>
+            <span>
+              <strong>BoDoFo</strong>
+              <small>Body Doubling Focus</small>
+            </span>
+          </a>
+          <span className="info-trigger">
+            <button
+              ref={aboutButtonRef}
+              className="info-button"
+              type="button"
+              aria-label="Learn more about BoDoFo"
+              aria-describedby="about-tooltip"
+              onClick={() => {
+                setIsAboutTooltipVisible(false);
+                setIsAboutModalOpen(true);
+              }}
+              onFocus={() => setIsAboutTooltipVisible(true)}
+              onBlur={() => setIsAboutTooltipVisible(false)}
+              onMouseEnter={() => setIsAboutTooltipVisible(true)}
+              onMouseLeave={() => setIsAboutTooltipVisible(false)}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 10.5v6" />
+                <circle cx="12" cy="7.5" r="0.7" />
+              </svg>
+            </button>
+            <span
+              className={`info-tooltip ${
+                isAboutTooltipVisible ? "info-tooltip--visible" : ""
+              }`}
+              id="about-tooltip"
+              role="tooltip"
+            >
+              Learn more about my side project
+            </span>
           </span>
-        </a>
-        
+        </div>
       </header>
 
       <section className="focus-village" id="focus-room">
@@ -223,6 +264,7 @@ function App() {
           setIsBuddyModalOpen(false);
         }}
       />
+      <AboutModal isOpen={isAboutModalOpen} onClose={closeAboutModal} />
 
     </main>
   );
