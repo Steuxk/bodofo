@@ -16,6 +16,9 @@ bioluminescent accents, and a translucent jelly-like squat companion.
 Squat mode temporarily shifts into the warm Sunrise Reef palette with coral
 glass, amber light, and a peach-gold version of the slime.
 
+The header information icon opens a creator-focused overview of the project,
+its motivation, and each feature.
+
 ## Run locally
 
 ```bash

@@ -96,6 +96,9 @@ second and the default squat interval is 2 seconds.
   - Mode-aware floating buddy.
 - `src/components/CompanionModal.tsx`
   - Persisted buddy name/type selection.
+- `src/components/AboutModal.tsx`
+  - Informational project story, feature overview, and creator disclaimer.
+  - Must remain independent from timer, mode, and persistence behavior.
 - `src/components/buddies/BuddySvg.tsx`
   - Inline SVG buddy renderer. Add future visual variants here or behind the
     same component interface.
