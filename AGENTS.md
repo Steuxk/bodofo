@@ -13,6 +13,10 @@ The current art direction is a quiet deep-sea focus sanctuary: dark ocean
 gradients, frosted glass surfaces, bioluminescent aqua accents, and restrained
 motion. Avoid warm beach, village, candy, or playground styling.
 
+Squat mode is the intentional exception. Its `Sunrise Reef` styling is scoped
+under `.app--squat` and uses warm coral, peach, and amber light to signal
+movement. Keep focus and breathing in the deep-sea palette.
+
 ## Stack
 
 - React 18
@@ -80,7 +84,8 @@ second and the default squat interval is 2 seconds.
   - Automatic movement-break UI with slime guidance and a completion state
     that surfaces focus-length choices.
 - `src/components/SquatSlime.tsx`
-  - Reusable translucent SVG movement companion that animates once per squat.
+  - Reusable translucent SVG movement companion with squat-only warm glass
+    colors that animates once per squat.
 - `src/components/ConfettiBurst.tsx`
   - Lightweight, deterministic CSS confetti for squat completion.
 - `src/components/ThoughtDump.tsx`

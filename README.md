@@ -13,6 +13,8 @@ breathing and squat breaks.
 
 The visual system uses Quicksand, deep navy glass surfaces, restrained
 bioluminescent accents, and a translucent jelly-like squat companion.
+Squat mode temporarily shifts into the warm Sunrise Reef palette with coral
+glass, amber light, and a peach-gold version of the slime.
 
 ## Run locally
 
