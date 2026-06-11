@@ -10,7 +10,7 @@ export type AppStage =
 
 export type TimerStatus = "idle" | "running" | "paused";
 
-export type FocusDurationMinutes = 0.1 | 15 | 25 | 30 | 45 ;
+export type FocusDurationMinutes = 0.1 | 15 | 25 | 45 ;
 
 export type BuddyType = "study" | "cat" | "office" | "gym";
 
