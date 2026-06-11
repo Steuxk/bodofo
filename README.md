@@ -44,6 +44,9 @@ The focus override is measured in seconds. Without overrides, the selected
 focus length is used, breathing seconds advance every second, and squats
 advance every 2 seconds.
 
+Focus, breathing, and squat progress derive from elapsed wall-clock time, so
+inactive or throttled browser tabs catch up immediately when observed again.
+
 ## Extension points
 
 - Buddy visuals and mode-specific activity live in `src/data/buddies.ts`.
@@ -55,5 +58,6 @@ advance every 2 seconds.
   small mode state machine in `src/App.tsx`.
 - Squat timing is wall-clock based, while the slime, synthesized cues, and
   completion confetti remain separate presentation components.
+- Shared elapsed-time behavior lives in `src/hooks/useElapsedTimer.ts`.
 - Theme tokens and atmospheric background layers live in
   `src/styles/globals.css`; keep future palettes centralized there.

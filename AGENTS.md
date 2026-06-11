@@ -57,10 +57,12 @@ second and the default squat interval is 2 seconds.
   - Owns persisted task, focus count, focus duration, thoughts, and buddy.
   - Connects timer completion and audio feedback.
 - `src/hooks/useCountdown.ts`
-  - Generic focus/breathing countdown with idle, running, and paused states.
+  - Focus countdown adapter over the shared elapsed timer.
+- `src/hooks/useElapsedTimer.ts`
+  - Timestamp-based start, pause, resume, reset, remaining-time, and one-shot
+    completion behavior.
 - `src/hooks/useSquatCountdown.ts`
-  - Wall-clock-based ten-squat progression with pause, resume, restart, and
-    completion.
+  - Derives ten-squat progression from shared elapsed wall-clock time.
 - `src/hooks/useLocalStorage.ts`
   - Generic persisted-state hook.
 - `src/components/TimerCard.tsx`
@@ -128,6 +130,8 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - Audio failures must remain silent and must never interrupt the timer flow.
 - Do not trigger cues on every countdown tick. Phase cues fire only when the
   phase value changes.
+- When a background tab jumps forward, play at most the newly observed phase
+  or squat cue; never replay missed intermediate cues.
 
 ## Extension Constraints
 
@@ -137,6 +141,8 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 - Keep shared colors, gradients, surfaces, and glow values in the root CSS
   tokens instead of scattering new palettes through components.
 - Keep all rendered UI text at 14px or larger.
+- Timer callbacks may refresh React state, but progress must always be derived
+  from timestamps rather than incrementing once per callback.
 - Keep buddy visuals catalog-driven so animated sprites or GIF renderers can be
   introduced without changing persisted buddy settings.
 - Keep manual edits scoped and make small milestone commits.
@@ -172,7 +178,8 @@ Before handing work back:
    completion return.
 7. Check the 390px responsive layout for horizontal overflow.
 8. Check computed text sizes for the 14px minimum.
-9. Check the browser console for warnings and errors.
+9. Check focus, breathing, and squat catch-up after an inactive/throttled tab.
+10. Check the browser console for warnings and errors.
 
 The in-app browser may throttle hidden tabs and does not fully support
 clipboard/download observation. Use visible-state feedback plus build checks,
