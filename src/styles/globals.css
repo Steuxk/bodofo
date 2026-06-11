@@ -90,11 +90,78 @@ input:disabled {
 }
 
 .app--squat {
-  --ocean: #4db6d6;
-  --coral: #8ce6ff;
+  --navy: #6b3d1f;
+  --ocean: #ff9f68;
+  --coral: #ff8a5b;
+  --white: #fffaf5;
+  --muted-text: #80543a;
+  --subtle-text: #98684a;
+  --line: rgba(255, 138, 91, 0.26);
+  --accent-gradient: linear-gradient(135deg, #ff9f68, #ff8a5b);
   background:
-    radial-gradient(circle at 50% 14%, rgba(140, 230, 255, 0.15), transparent 32%),
-    linear-gradient(160deg, #061826, #0d2b43 58%, #153856);
+    radial-gradient(circle at 50% -4%, rgba(255, 233, 179, 0.98), transparent 34%),
+    radial-gradient(circle at 82% 26%, rgba(255, 184, 125, 0.52), transparent 34%),
+    radial-gradient(circle at 12% 74%, rgba(255, 159, 104, 0.28), transparent 38%),
+    linear-gradient(155deg, #fff5ec 0%, #ffe5d0 48%, #ffcfae 100%);
+  animation: squat-sunrise 820ms ease-out both;
+}
+
+.app--squat::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(
+      112deg,
+      transparent 8%,
+      rgba(255, 255, 238, 0.42) 28%,
+      transparent 48%
+    ),
+    radial-gradient(circle at 56% 10%, rgba(255, 217, 120, 0.36), transparent 30%);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  animation: squat-sunlight 900ms 100ms ease-out forwards;
+}
+
+.app--squat .brand {
+  color: #6b3d1f;
+}
+
+.app--squat .brand__mark {
+  border-color: rgba(107, 61, 31, 0.16);
+  color: #fffaf5;
+  background: linear-gradient(145deg, #ff9f68, #ff7b47);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    0 8px 24px rgba(255, 138, 91, 0.22);
+}
+
+.app--squat .brand small {
+  color: #80543a;
+}
+
+.app--squat .room-accents::before,
+.app--squat .room-accents::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 238, 0.46),
+    rgba(255, 217, 120, 0.08) 64%,
+    transparent
+  );
+  opacity: 0.72;
+}
+
+.app--squat .room-accents span {
+  background: rgba(255, 184, 125, 0.32);
+}
+
+.app--squat .room-accents span:nth-child(2) {
+  background: rgba(255, 138, 91, 0.22);
+}
+
+.app--squat .room-accents span:nth-child(3) {
+  background: rgba(255, 217, 120, 0.24);
 }
 
 .site-header {
@@ -1087,26 +1154,188 @@ input:disabled {
 }
 
 .squat-card .mode-pill {
-  color: #c8f4ff;
-  background: rgba(77, 182, 214, 0.16);
+  border-color: rgba(255, 138, 91, 0.22);
+  color: #7b4628;
+  background: rgba(255, 233, 179, 0.52);
+}
+
+.app--squat .squat-card {
+  border-color: rgba(255, 138, 91, 0.34);
+  color: #6b3d1f;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.78), transparent 38%),
+    linear-gradient(
+      145deg,
+      rgba(255, 245, 236, 0.98),
+      rgba(255, 229, 208, 0.96) 58%,
+      rgba(255, 207, 174, 0.94)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 28px 80px rgba(180, 89, 43, 0.2),
+    0 0 52px rgba(255, 184, 125, 0.2);
+}
+
+.app--squat .squat-card::before {
+  background: #ffd978;
+  opacity: 0.28;
+}
+
+.app--squat .squat-card::after {
+  background: #ff8a5b;
+  opacity: 0.16;
+}
+
+.app--squat .squat-card .session-label,
+.app--squat .squat-instruction {
+  color: #80543a;
 }
 
 .squat-counter {
-  display: flex;
-  align-items: baseline;
+  display: grid;
+  gap: 1px;
   justify-content: center;
-  margin: 10px 0 22px;
+  margin: 6px 0 22px;
+  color: #6b3d1f;
+  text-align: center;
+}
+
+.squat-counter__label {
+  color: #98684a;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
 }
 
 .squat-counter strong {
-  font: 700 clamp(2.8rem, 7vw, 4.6rem)/0.9 "Quicksand", "Noto Sans", sans-serif;
-  letter-spacing: -0.05em;
+  color: #ff7b47;
+  font: 700 clamp(4rem, 9vw, 6.5rem)/0.88 "Quicksand", "Noto Sans", sans-serif;
+  letter-spacing: -0.06em;
+  text-shadow: 0 8px 24px rgba(255, 138, 91, 0.2);
 }
 
-.squat-counter span {
-  margin-left: 14px;
-  color: var(--muted-text);
-  font-weight: 800;
+.squat-counter__total {
+  color: #80543a;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.app--squat .primary-button {
+  border-color: rgba(107, 61, 31, 0.12);
+  color: #fffaf5;
+  background: #ff8a5b;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 10px 26px rgba(255, 123, 71, 0.28);
+}
+
+.app--squat .primary-button:not(:disabled):hover {
+  background: #ff7b47;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    0 14px 32px rgba(255, 123, 71, 0.34);
+}
+
+.app--squat .text-button {
+  color: #6b3d1f;
+}
+
+.app--squat .text-button:not(:disabled):hover {
+  background: rgba(255, 138, 91, 0.12);
+}
+
+.app--squat .duration-picker legend {
+  color: #80543a;
+}
+
+.app--squat .duration-picker > div {
+  border-color: rgba(255, 138, 91, 0.18);
+  background: rgba(255, 245, 236, 0.52);
+}
+
+.app--squat .duration-option {
+  color: #80543a;
+}
+
+.app--squat .duration-option--selected {
+  color: #6b3d1f;
+  background: linear-gradient(135deg, #ffe9b3, #ffb87d);
+  box-shadow: 0 5px 18px rgba(255, 138, 91, 0.18);
+}
+
+.app--squat .thought-dump {
+  border-color: rgba(255, 138, 91, 0.18);
+  color: #6b3d1f;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 245, 236, 0.74),
+    rgba(255, 229, 208, 0.7)
+  );
+  box-shadow: 0 18px 50px rgba(180, 89, 43, 0.12);
+}
+
+.app--squat .thought-dump .eyebrow,
+.app--squat .thought-dump label,
+.app--squat .empty-thoughts,
+.app--squat .thought-actions span {
+  color: #80543a;
+}
+
+.app--squat .thought-form input {
+  border-color: rgba(255, 138, 91, 0.18);
+  color: #6b3d1f;
+  background: rgba(255, 250, 245, 0.74);
+}
+
+.app--squat .thought-form input::placeholder {
+  color: #98684a;
+}
+
+.app--squat .thought-note {
+  border-color: rgba(255, 138, 91, 0.18);
+  color: #6b3d1f;
+  background: linear-gradient(135deg, rgba(255, 233, 179, 0.86), rgba(255, 207, 174, 0.82));
+  box-shadow: 0 8px 20px rgba(180, 89, 43, 0.12);
+}
+
+.app--squat .thought-note:nth-child(3n) {
+  background: linear-gradient(135deg, rgba(255, 229, 208, 0.9), rgba(255, 184, 125, 0.76));
+}
+
+.app--squat .thought-actions {
+  border-color: rgba(255, 138, 91, 0.14);
+}
+
+.app--squat .thought-actions button {
+  border-color: rgba(255, 138, 91, 0.18);
+  color: #6b3d1f;
+  background: rgba(255, 245, 236, 0.58);
+}
+
+.app--squat .companion-button {
+  border-color: rgba(255, 138, 91, 0.2);
+  color: #6b3d1f;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 245, 236, 0.84),
+    rgba(255, 229, 208, 0.8)
+  );
+  box-shadow: 0 18px 48px rgba(180, 89, 43, 0.18);
+}
+
+.app--squat .companion-visual {
+  border-color: rgba(255, 138, 91, 0.2);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 250, 245, 0.58), transparent 30%),
+    linear-gradient(145deg, rgba(255, 217, 120, 0.58), rgba(255, 159, 104, 0.42));
+  box-shadow:
+    inset -7px -7px 18px rgba(107, 61, 31, 0.1),
+    0 0 24px rgba(255, 184, 125, 0.24);
+}
+
+.app--squat .companion-copy small,
+.app--squat .companion-edit {
+  color: #80543a;
 }
 
 .squat-slime {
@@ -1114,7 +1343,7 @@ input:disabled {
   width: 178px;
   height: 164px;
   margin: 24px auto 4px;
-  filter: drop-shadow(0 0 20px rgba(77, 182, 214, 0.18));
+  filter: drop-shadow(0 0 22px rgba(255, 159, 104, 0.3));
 }
 
 .squat-slime__body {
@@ -1135,7 +1364,7 @@ input:disabled {
   bottom: 0;
   left: 10px;
   width: calc(100% - 20px);
-  fill: rgba(3, 15, 26, 0.34);
+  fill: rgba(107, 61, 31, 0.2);
   filter: blur(2px);
 }
 
@@ -1197,19 +1426,44 @@ input:disabled {
 
 @keyframes slime-bounce {
   0% {
+    filter: brightness(1);
     transform: translateY(0) scaleX(1) scaleY(1);
   }
   16% {
+    filter: brightness(1.04);
     transform: translateY(4px) scaleX(1.09) scaleY(0.91);
   }
   48% {
+    filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 217, 120, 0.55));
     transform: translateY(-22px) scaleX(0.94) scaleY(1.07);
   }
   76% {
+    filter: brightness(1.08) drop-shadow(0 0 15px rgba(255, 184, 125, 0.42));
     transform: translateY(-3px) scaleX(1.03) scaleY(0.98);
   }
   100% {
+    filter: brightness(1);
     transform: translateY(0) scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes squat-sunrise {
+  from {
+    background-color: #0d2b43;
+  }
+  to {
+    background-color: #ffe5d0;
+  }
+}
+
+@keyframes squat-sunlight {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

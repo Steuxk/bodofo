@@ -32,32 +32,32 @@ export function SquatSlime({
       >
         <defs>
           <radialGradient id="slime-fill" cx="34%" cy="22%" r="82%">
-            <stop offset="0" stopColor="#dff8ff" stopOpacity="0.84" />
-            <stop offset="0.3" stopColor="#7ceeff" stopOpacity="0.72" />
-            <stop offset="0.68" stopColor="#4db6d6" stopOpacity="0.68" />
-            <stop offset="1" stopColor="#215d8c" stopOpacity="0.78" />
+            <stop offset="0" stopColor="#fff5ec" stopOpacity="0.9" />
+            <stop offset="0.3" stopColor="#ffe9b3" stopOpacity="0.8" />
+            <stop offset="0.68" stopColor="#ffb87d" stopOpacity="0.74" />
+            <stop offset="1" stopColor="#ff8a5b" stopOpacity="0.82" />
           </radialGradient>
           <linearGradient id="slime-edge" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stopColor="#dff8ff" stopOpacity="0.78" />
-            <stop offset="0.55" stopColor="#8ce6ff" stopOpacity="0.42" />
-            <stop offset="1" stopColor="#4db6d6" stopOpacity="0.62" />
+            <stop offset="0" stopColor="#fffaf5" stopOpacity="0.88" />
+            <stop offset="0.55" stopColor="#ffd978" stopOpacity="0.52" />
+            <stop offset="1" stopColor="#ff9f68" stopOpacity="0.68" />
           </linearGradient>
           <radialGradient id="slime-inner-glow" cx="50%" cy="34%" r="65%">
-            <stop offset="0" stopColor="#dff8ff" stopOpacity="0.34" />
-            <stop offset="1" stopColor="#8ce6ff" stopOpacity="0" />
+            <stop offset="0" stopColor="#fffaf5" stopOpacity="0.44" />
+            <stop offset="1" stopColor="#ffd978" stopOpacity="0" />
           </radialGradient>
           <filter id="slime-glow" x="-35%" y="-35%" width="170%" height="180%">
             <feGaussianBlur stdDeviation="5" result="blur" />
             <feColorMatrix
               in="blur"
               type="matrix"
-              values="0 0 0 0 0.30 0 0 0 0 0.71 0 0 0 0 0.84 0 0 0 0.42 0"
+              values="0 0 0 0 1 0 0 0 0 0.62 0 0 0 0 0.41 0 0 0 0.42 0"
             />
           </filter>
         </defs>
         <path
           d="M80 16c31 0 55 25 55 58 0 35-19 55-55 55S25 109 25 74c0-33 24-58 55-58Z"
-          fill="#4db6d6"
+          fill="#ff9f68"
           opacity="0.3"
           filter="url(#slime-glow)"
         />
@@ -69,16 +69,16 @@ export function SquatSlime({
         />
         <path
           d="M31 91c8 23 24 34 49 34 26 0 42-11 49-34-3 27-19 38-49 38-29 0-46-12-49-38Z"
-          fill="#061826"
+          fill="#6b3d1f"
           opacity="0.1"
         />
         <ellipse cx="80" cy="69" rx="49" ry="49" fill="url(#slime-inner-glow)" />
-        <ellipse cx="62" cy="76" rx="3.5" ry="4.5" fill="#0f2740" opacity="0.82" />
-        <ellipse cx="98" cy="76" rx="3.5" ry="4.5" fill="#0f2740" opacity="0.82" />
+        <ellipse cx="62" cy="76" rx="3.5" ry="4.5" fill="#6b3d1f" opacity="0.9" />
+        <ellipse cx="98" cy="76" rx="3.5" ry="4.5" fill="#6b3d1f" opacity="0.9" />
         <path
           d="M68 91c8 7 17 7 25 0"
           fill="none"
-          stroke="#0f2740"
+          stroke="#6b3d1f"
           strokeLinecap="round"
           strokeWidth="2.5"
           opacity="0.82"
@@ -91,8 +91,8 @@ export function SquatSlime({
           strokeWidth="7"
           opacity="0.42"
         />
-        <circle cx="111" cy="49" r="5" fill="#dff8ff" opacity="0.28" />
-        <circle cx="119" cy="59" r="2.5" fill="#dff8ff" opacity="0.4" />
+        <circle cx="111" cy="49" r="5" fill="#fffaf5" opacity="0.42" />
+        <circle cx="119" cy="59" r="2.5" fill="#fffaf5" opacity="0.54" />
         <ellipse
           cx="52"
           cy="65"
