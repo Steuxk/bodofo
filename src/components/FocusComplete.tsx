@@ -27,9 +27,7 @@ export function FocusComplete({
       </div>
       <p className="session-label">A good stopping point</p>
       <h1 id="mode-title">What would you like to do next?</h1>
-      <p className="choice-card__intro">
-        Choose the kind of reset that feels useful right now.
-      </p>
+      
       <div className="choice-list">
         <button className="choice-button" type="button" onClick={onBreathing}>
           <strong>Start breathing exercise</strong>
