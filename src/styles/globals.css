@@ -619,9 +619,9 @@ input:disabled {
 
 .choice-list {
   display: grid;
-  gap: 12px;
+  gap: 16px;
   max-width: 460px;
-  margin: 0 auto;
+  margin: 24px auto 8px;
 }
 
 .next-focus {
