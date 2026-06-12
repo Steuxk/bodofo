@@ -415,29 +415,28 @@ input:disabled {
 }
 
 .session-label {
-  margin: 24px 0 8px;
+  margin: 12px 0 4px;
   color: var(--muted-text);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.45;
   letter-spacing: 0.08em;
-  /*text-transform: uppercase;*/
 }
 
 .timer-card h1 {
   max-width: 440px;
   margin: 0 auto;
-  font: 600 clamp(1.35rem, 2.5vw, 2rem)/1.35 "Quicksand", "Noto Sans", sans-serif;
-  letter-spacing: -0.01em;
+  font: 500 clamp(1.35rem, 2.5vw, 1.8rem)/1.35 "Quicksand", "Noto Sans", sans-serif;
+  letter-spacing: 0em;
 }
 
 .timer-display {
   display: block;
-  margin: 14px 0 20px;
+  margin: 8px 0 12px;
   color: #effcff;
-  font: 600 clamp(4.8rem, 10vw, 7.8rem)/1 "Quicksand", "Noto Sans", sans-serif;
+  font: 500 clamp(4.8rem, 10vw, 6.8rem)/1 "Quicksand", "Noto Sans", sans-serif;
   text-shadow: 0 0 34px rgba(140, 230, 255, 0.16);
-  letter-spacing: -0.035em;
+  letter-spacing: 0em;
   font-variant-numeric: tabular-nums;
 }
 
