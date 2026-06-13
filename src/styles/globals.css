@@ -1452,29 +1452,31 @@ input:disabled {
   display: grid;
   gap: 1px;
   justify-content: center;
-  margin: 6px 0 22px;
+  margin: 4px 0 16px;
   color: #6b3d1f;
   text-align: center;
 }
 
 .squat-counter__label {
   color: #98684a;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.08em;
 }
 
 .squat-counter strong {
   color: #ff7b47;
-  font: 700 clamp(4rem, 9vw, 6.5rem)/0.88 "Quicksand", "Noto Sans", sans-serif;
-  letter-spacing: -0.06em;
+  margin: 12px auto 12px;
+  font: 600 clamp(4rem, 9vw, 6.5rem)/0.88 "Quicksand", "Noto Sans", sans-serif;
+  letter-spacing: 0em;
   text-shadow: 0 8px 24px rgba(255, 138, 91, 0.2);
 }
 
 .squat-counter__total {
   color: #80543a;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0.08em;
 }
 
 .app--squat .primary-button {
@@ -1636,9 +1638,9 @@ input:disabled {
 
 .squat-instruction {
   min-height: 40px;
-  margin: 0 auto 18px;
+  margin: 0 auto 12px;
   color: var(--muted-text);
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 .confetti-burst {

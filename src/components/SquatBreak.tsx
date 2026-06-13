@@ -63,7 +63,6 @@ export function SquatBreak({
         isPaused={status === "paused"}
       />
       <div className="squat-counter" aria-live="polite">
-        <span className="squat-counter__label">Squat</span>
         <strong>{count}</strong>
         <span className="squat-counter__total">
           of {SQUAT_TARGET} squats
