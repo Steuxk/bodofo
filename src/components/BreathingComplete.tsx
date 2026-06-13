@@ -21,8 +21,8 @@ export function BreathingComplete({
         <span className="mode-pill__dot" />
         Breathing complete
       </div>
-      <p className="session-label">Four sets complete</p>
-      <h1 id="mode-title">Nice work.</h1>
+      {/* <p className="session-label">Four sets complete</p> */}
+      <h1 id="mode-title">You've completed all 4 sets. Nice work.</h1>
       <p className="choice-card__intro">
         Choose a comfortable length for your next session.
       </p>

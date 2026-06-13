@@ -53,7 +53,7 @@ export function SquatBreak({
         <span className="mode-pill__dot" />
         Movement break
       </div>
-      <p className="session-label">A little reset</p>
+      {/* <p className="session-label">A little reset</p> */}
       <h1 id="mode-title">
         {isComplete ? "Nice work!" : "Ten squats together."}
       </h1>

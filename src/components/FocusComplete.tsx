@@ -25,7 +25,7 @@ export function FocusComplete({
         <span className="mode-pill__dot" />
         Focus complete
       </div>
-      <p className="session-label">A good stopping point</p>
+      {/* <p className="session-label">A good stopping point</p> */}
       <h1 id="mode-title">What would you like to do next?</h1>
       
       <div className="choice-list">

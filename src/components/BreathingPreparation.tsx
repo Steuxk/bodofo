@@ -16,7 +16,7 @@ export function BreathingPreparation({
         <span className="mode-pill__dot" />
         Breathing exercise
       </div>
-      <p className="session-label">Four steady sets</p>
+      {/* <p className="session-label">Four steady sets</p> */}
       <h1 id="mode-title">Settle in before you begin.</h1>
       <div className="breathing-pattern" aria-label="Breathing pattern">
         <span>
@@ -33,7 +33,7 @@ export function BreathingPreparation({
         </span>
       </div>
       <p className="choice-card__intro">
-        Sit comfortably. The sound cues can guide you without watching.
+        Close your eyes if you'd like, and follow the sound through four slow, gentle breathing sets.
       </p>
       <div className="timer-actions">
         <button className="primary-button" type="button" onClick={onStart}>

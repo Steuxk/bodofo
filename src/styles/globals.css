@@ -415,7 +415,7 @@ input:disabled {
 }
 
 .session-label {
-  margin: 12px 0 4px;
+  margin: 16px 0 4px;
   color: var(--muted-text);
   font-size: 0.875rem;
   font-weight: 500;
@@ -425,9 +425,9 @@ input:disabled {
 
 .timer-card h1 {
   max-width: 440px;
-  margin: 0 auto;
+  margin: 16px auto 4px;
   font: 500 clamp(1.35rem, 2.5vw, 1.8rem)/1.35 "Quicksand", "Noto Sans", sans-serif;
-  letter-spacing: 0em;
+  letter-spacing: 0.04em;
 }
 
 .timer-display {
@@ -615,6 +615,7 @@ input:disabled {
   margin: 18px auto 26px;
   color: var(--muted-text);
   line-height: 1.6;
+  letter-spacing: 0.04rem;
 }
 
 .choice-list {
@@ -703,7 +704,8 @@ input:disabled {
 
 .breathing-pattern strong {
   color: var(--navy);
-  font-size: 2rem;
+  font-size: 3rem;
+  font-weight: 500;
 }
 
 .eyebrow {
@@ -1375,6 +1377,7 @@ input:disabled {
   color: var(--navy);
   font-size: 3rem;
   font-variant-numeric: tabular-nums;
+  font-weight: 500;
 }
 
 .breathing-instruction span {
