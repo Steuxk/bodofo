@@ -95,13 +95,13 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
           </div>
 
           <section className="about-modal__section">
-            <h3>Why I built this</h3>
+            <h3>Why I built this?</h3>
             <p>
               I often catch myself jumping between tasks, chasing new ideas,
-              or getting distracted halfway through something important.
+              or getting distracted halfway through something important...
             </p>
             <p>
-              BoDoFo started as a small experiment to combine a few techniques
+              BoDoFo started as a small experiment to combine a few focus techniques
               that help me personally:
             </p>
             <ul>
@@ -112,8 +112,8 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               <li>quickly parking distracting thoughts</li>
             </ul>
             <p>
-              Nothing groundbreaking, just a simple tool that tries to make
-              focusing a little easier.
+              Nothing groundbreaking, just a simple tool that tries to make focusing a little easier and more enjoyable. 
+              In the end, though, discipline is still the foundation.
             </p>
           </section>
 
@@ -132,13 +132,15 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
           <section className="about-modal__section about-modal__disclaimer">
             <h3>A small disclaimer</h3>
             <p>
-              This project was mostly vibecoded and built in about a day.
+              This project was mostly vibecoded and built in about a day!
             </p>
             <p>
-              The goal wasn't perfection. It was to quickly explore an idea,
-              build something useful, and see where it goes.
+              The goal was to quickly turn an idea into something real, 
+              make it useful for myself and friends, 
+              and discover whether it was worth taking further.
+              
             </p>
-            <p>If you find it helpful, that's already a win.</p>
+            
           </section>
         </div>
 
