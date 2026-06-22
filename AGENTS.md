@@ -66,7 +66,10 @@ second and the default squat interval is 2 seconds.
 - `src/hooks/useLocalStorage.ts`
   - Generic persisted-state hook.
 - `src/components/TimerCard.tsx`
-  - Focus task, duration selector, timer, and controls.
+  - Focus task entry, focus-task display/edit mode, duration selector, timer,
+    and controls.
+  - Requires a non-empty task before starting and treats the running task as the
+    primary focus-mode heading.
 - `src/components/FocusDurationPicker.tsx`
   - Shared focus-length choices used before initial and repeat sessions.
 - `src/components/FocusComplete.tsx`
@@ -153,6 +156,7 @@ Audio is synthesized locally with Web Audio; there are no sound assets.
 
 ## Recent Milestones
 
+- `0ddcc14` makes the focus task the visual anchor of active focus sessions.
 - `eef3aed` adds the four-set 4-7-8 breathing flow.
 - `9d57594` adds user-controlled post-focus break choices.
 - `8bb063f` adds the 0.1-minute development focus option.
